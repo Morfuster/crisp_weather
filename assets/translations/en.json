@@ -33,5 +33,6 @@
   "cozyCafe": "Cozy café",
   "walking": "Walking",
   "noCitiesYet": "No saved cities.\nSearch to add one.",
-  "searchFailed": "Search failed"
+  "searchFailed": "Search failed",
+  "textSize": "Text Size"
 }

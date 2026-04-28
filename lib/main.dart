@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'core/settings/settings_provider.dart';
 import 'data/services/geocoding_service.dart';
 import 'data/services/weather_service.dart';
 import 'features/cities/cities_provider.dart';
@@ -64,6 +65,7 @@ class CrispWeatherApp extends StatelessWidget {
 
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (_) => SettingsProvider()),
         ChangeNotifierProvider(
           create: (_) => CitiesProvider(geocodingService: geocodingService),
         ),
@@ -80,14 +82,20 @@ class CrispWeatherApp extends StatelessWidget {
               ),
         ),
       ],
-      child: MaterialApp(
-        title: 'CrispWeather',
-        debugShowCheckedModeBanner: false,
-        theme: buildTheme(),
-        localizationsDelegates: context.localizationDelegates,
-        supportedLocales: context.supportedLocales,
-        locale: context.locale,
-        home: const _AppStartup(),
+      child: Consumer<SettingsProvider>(
+        builder: (context, settings, _) => MediaQuery(
+          data: MediaQuery.of(context)
+              .copyWith(textScaler: TextScaler.linear(settings.textScale)),
+          child: MaterialApp(
+            title: 'CrispWeather',
+            debugShowCheckedModeBanner: false,
+            theme: buildTheme(),
+            localizationsDelegates: context.localizationDelegates,
+            supportedLocales: context.supportedLocales,
+            locale: context.locale,
+            home: const _AppStartup(),
+          ),
+        ),
       ),
     );
   }
@@ -105,7 +113,10 @@ class _AppStartupState extends State<_AppStartup> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await context.read<CitiesProvider>().loadSavedCities();
+      await Future.wait([
+        context.read<SettingsProvider>().load(),
+        context.read<CitiesProvider>().loadSavedCities(),
+      ]);
       if (mounted) {
         await context.read<HomeProvider>().refresh();
       }
@@ -155,78 +166,132 @@ class _AppShellState extends State<AppShell> {
         ],
       ),
       floatingActionButton: FloatingActionButton.small(
-        heroTag: 'lang_picker',
+        heroTag: 'settings',
         backgroundColor: Colors.black45,
-        onPressed: () => _showLanguagePicker(context),
-        child: const Icon(Icons.language_rounded, color: Colors.white),
+        onPressed: () => _showSettings(context),
+        child: const Icon(Icons.settings_rounded, color: Colors.white),
       ),
     );
   }
 
-  void _showLanguagePicker(BuildContext context) {
+  void _showSettings(BuildContext context) {
     final currentCode = context.locale.languageCode;
+    final screenH = MediaQuery.of(context).size.height;
+
     showModalBottomSheet(
       context: context,
       backgroundColor: const Color(0xFF1A2744),
+      isScrollControlled: true,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
-      builder: (_) => SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const SizedBox(height: 12),
-            Container(
-              width: 40,
-              height: 4,
-              decoration: BoxDecoration(
-                color: Colors.white24,
-                borderRadius: BorderRadius.circular(2),
-              ),
+      builder: (sheetCtx) {
+        return ConstrainedBox(
+          constraints: BoxConstraints(maxHeight: screenH * 0.82),
+          child: SafeArea(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 12),
+                Center(
+                  child: Container(
+                    width: 40,
+                    height: 4,
+                    decoration: BoxDecoration(
+                      color: Colors.white24,
+                      borderRadius: BorderRadius.circular(2),
+                    ),
+                  ),
+                ),
+                // — Text Size —
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 20, 16, 8),
+                  child: Text(
+                    'textSize'.tr(),
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Consumer<SettingsProvider>(
+                    builder: (ctx, settings, child) => SegmentedButton<TextSizeOption>(
+                      style: SegmentedButton.styleFrom(
+                        backgroundColor: const Color(0xFF0D1B2A),
+                        selectedBackgroundColor: const Color(0xFF00B4D8),
+                        selectedForegroundColor: Colors.white,
+                        foregroundColor: Colors.white70,
+                      ),
+                      segments: TextSizeOption.values
+                          .map((opt) => ButtonSegment<TextSizeOption>(
+                                value: opt,
+                                label: Text(opt.label,
+                                    style: const TextStyle(fontSize: 11)),
+                              ))
+                          .toList(),
+                      selected: {settings.textSize},
+                      onSelectionChanged: (selected) =>
+                          context.read<SettingsProvider>().setTextSize(selected.first),
+                    ),
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(16, 20, 16, 0),
+                  child: Divider(color: Colors.white12, height: 1),
+                ),
+                // — Language —
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+                  child: Text(
+                    'language'.tr(),
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                ),
+                Flexible(
+                  child: ListView(
+                    shrinkWrap: true,
+                    children: [
+                      ListTile(
+                        leading: const Icon(Icons.phone_android_rounded,
+                            color: Colors.white70),
+                        title: Text('langSystem'.tr(),
+                            style: const TextStyle(color: Colors.white)),
+                        trailing: currentCode == context.deviceLocale.languageCode
+                            ? const Icon(Icons.check_circle_rounded,
+                                color: Color(0xFF00B4D8))
+                            : null,
+                        onTap: () {
+                          context.resetLocale();
+                          Navigator.pop(sheetCtx);
+                        },
+                      ),
+                      const Divider(color: Colors.white12, height: 1),
+                      ..._supportedLocales.map((locale) {
+                        final code = locale.languageCode;
+                        final name = _languageNames[code] ?? code;
+                        final isSelected = currentCode == code;
+                        return ListTile(
+                          title: Text(name,
+                              style: const TextStyle(color: Colors.white)),
+                          trailing: isSelected
+                              ? const Icon(Icons.check_circle_rounded,
+                                  color: Color(0xFF00B4D8))
+                              : null,
+                          onTap: () {
+                            context.setLocale(locale);
+                            Navigator.pop(sheetCtx);
+                          },
+                        );
+                      }),
+                      const SizedBox(height: 8),
+                    ],
+                  ),
+                ),
+              ],
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-              child: Text(
-                'language'.tr(),
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-            ),
-            // System default option
-            ListTile(
-              leading: const Icon(Icons.phone_android_rounded,
-                  color: Colors.white70),
-              title: Text('langSystem'.tr(),
-                  style: const TextStyle(color: Colors.white)),
-              trailing: currentCode == context.deviceLocale.languageCode
-                  ? const Icon(Icons.check_circle_rounded, color: Color(0xFF00B4D8))
-                  : null,
-              onTap: () {
-                context.resetLocale();
-                Navigator.pop(context);
-              },
-            ),
-            const Divider(color: Colors.white12, height: 1),
-            ..._supportedLocales.map((locale) {
-              final code = locale.languageCode;
-              final name = _languageNames[code] ?? code;
-              final isSelected = currentCode == code;
-              return ListTile(
-                title: Text(name,
-                    style: const TextStyle(color: Colors.white)),
-                trailing: isSelected
-                    ? const Icon(Icons.check_circle_rounded,
-                        color: Color(0xFF00B4D8))
-                    : null,
-                onTap: () {
-                  context.setLocale(locale);
-                  Navigator.pop(context);
-                },
-              );
-            }),
-            const SizedBox(height: 8),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }
