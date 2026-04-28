@@ -41,7 +41,7 @@ class _HourlyItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(timeLabel, style: theme.textTheme.bodySmall),
-          WeatherIcon(code: entry.weatherCode, size: 24),
+          WeatherIcon(code: entry.weatherCode, size: 30),
           Text(
             '${entry.temperature.round()}°',
             style: theme.textTheme.bodyLarge,

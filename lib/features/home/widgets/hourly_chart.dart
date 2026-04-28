@@ -103,7 +103,7 @@ class HourlyChart extends StatelessWidget {
                           height: 24,
                           child: Center(
                             child: WeatherIcon(
-                                code: h.weatherCode, size: 18),
+                                code: h.weatherCode, size: 22),
                           ),
                         ),
                         // Temperature label above the dot

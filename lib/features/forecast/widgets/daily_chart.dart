@@ -113,7 +113,7 @@ class DailyChart extends StatelessWidget {
                             height: _iconRowH - 4,
                             child: Center(
                               child: WeatherIcon(
-                                  code: d.weatherCode, size: 28),
+                                  code: d.weatherCode, size: 34),
                             ),
                           ),
                           // Max temp label — 14px above the dot

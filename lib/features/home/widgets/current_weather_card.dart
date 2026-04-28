@@ -44,7 +44,7 @@ class CurrentWeatherCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                WeatherIcon(code: weather.weatherCode, size: 64),
+                WeatherIcon(code: weather.weatherCode, size: 80),
               ],
             ),
             const SizedBox(height: 20),

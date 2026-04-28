@@ -22,7 +22,7 @@ class DailyRow extends StatelessWidget {
             width: 110,
             child: Text(dayLabel, style: theme.textTheme.bodyMedium),
           ),
-          WeatherIcon(code: forecast.weatherCode, size: 24),
+          WeatherIcon(code: forecast.weatherCode, size: 30),
           const SizedBox(width: 8),
           Expanded(
             child: Text(
