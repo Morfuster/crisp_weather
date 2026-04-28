@@ -104,7 +104,7 @@ class DailyChart extends StatelessWidget {
                               child: Text(
                                 _dateLabel(d.date, i),
                                 style: const TextStyle(
-                                  color: AppColors.textTertiary,
+                                  color: AppColors.panelText,
                                   fontSize: 10,
                                 ),
                                 textAlign: TextAlign.center,
@@ -247,7 +247,7 @@ class _LegendItem extends StatelessWidget {
         const SizedBox(width: 5),
         Text(label,
             style: const TextStyle(
-                color: AppColors.textTertiary, fontSize: 10)),
+                color: AppColors.panelText, fontSize: 10)),
       ],
     );
   }
@@ -335,7 +335,7 @@ class _DailyChartPainter extends CustomPainter {
           Paint()..color = color..style = PaintingStyle.fill);
       canvas.drawCircle(p, 4,
           Paint()
-            ..color = Colors.white.withAlpha(200)
+            ..color = AppColors.panelFill.withAlpha(200)
             ..strokeWidth = 1.5
             ..style = PaintingStyle.stroke);
     }

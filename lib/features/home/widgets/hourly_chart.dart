@@ -95,7 +95,7 @@ class HourlyChart extends StatelessWidget {
                             child: Text(
                               timeLabel,
                               style: const TextStyle(
-                                color: AppColors.textTertiary,
+                                color: AppColors.panelText,
                                 fontSize: 10,
                               ),
                             ),
@@ -122,20 +122,21 @@ class HourlyChart extends StatelessWidget {
                             child: Text(
                               '${h.temperature.round()}°',
                               style: const TextStyle(
-                                color: AppColors.textPrimary,
+                                color: AppColors.panelText,
                                 fontSize: 11,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
                           ),
                         ),
-                        // Precip label at the bottom
+                        // Precip label just above the bar top
                         if (total > 0)
                           Positioned(
-                            bottom: 0,
+                            bottom: (total / maxPrecip * _precipBarMaxHeight)
+                                .clamp(2.0, _precipBarMaxHeight),
                             left: 0,
                             right: 0,
-                            height: 16,
+                            height: 14,
                             child: Center(
                               child: Text(
                                 isSnow
@@ -143,9 +144,10 @@ class HourlyChart extends StatelessWidget {
                                     : '${h.precipitation.toStringAsFixed(1)}mm',
                                 style: TextStyle(
                                   color: isSnow
-                                      ? Colors.white70
+                                      ? AppColors.panelText
                                       : AppColors.accentBlue,
                                   fontSize: 9,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
                             ),
@@ -214,7 +216,7 @@ class _HourlyChartPainter extends CustomPainter {
           (total / maxPrecip * precipBarMaxHeight).clamp(2.0, precipBarMaxHeight);
       final isSnow = h.snowfall > h.precipitation;
       final barColor =
-          isSnow ? Colors.white.withAlpha(120) : AppColors.accentBlue.withAlpha(100);
+          isSnow ? const Color(0xFF90A4B8).withAlpha(160) : AppColors.accentBlue.withAlpha(120);
       final x = columnWidth * i + columnWidth * 0.25;
       final barWidth = columnWidth * 0.5;
 
@@ -289,7 +291,7 @@ class _HourlyChartPainter extends CustomPainter {
       ..color = AppColors.accentBlue
       ..style = PaintingStyle.fill;
     final dotBorderPaint = Paint()
-      ..color = Colors.white
+      ..color = AppColors.panelFill
       ..strokeWidth = 1.5
       ..style = PaintingStyle.stroke;
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../theme/app_colors.dart';
 
-/// Overcast-style solid dark panel — no blur, clean rounded rectangle.
+/// Overcast-style solid light-grey panel with dark text.
 class ForecastPanel extends StatelessWidget {
   const ForecastPanel({
     super.key,
@@ -21,10 +21,15 @@ class ForecastPanel extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.panelFill,
         borderRadius: BorderRadius.circular(borderRadius),
-        border: Border.all(color: AppColors.panelBorder, width: 0.5),
       ),
       padding: padding,
-      child: child,
+      child: DefaultTextStyle.merge(
+        style: const TextStyle(color: AppColors.panelText),
+        child: IconTheme.merge(
+          data: const IconThemeData(color: AppColors.panelText),
+          child: child,
+        ),
+      ),
     );
   }
 }
