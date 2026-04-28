@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/models/current_weather.dart';
 import '../../../data/adapters/open_meteo_adapter.dart';
-import '../../../shared/widgets/glass_card.dart';
+import '../../../shared/widgets/forecast_panel.dart';
 import '../../../shared/widgets/weather_icon.dart';
 
 class CurrentWeatherCard extends StatelessWidget {
@@ -16,7 +16,7 @@ class CurrentWeatherCard extends StatelessWidget {
     final theme = Theme.of(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: GlassCard(
+      child: ForecastPanel(
         padding: const EdgeInsets.all(24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../theme/app_colors.dart';
 
-/// Overcast-style solid light-grey panel with dark text.
+/// Overcast-style semi-transparent panel — white fill at ~33% opacity,
+/// no blur, so the animated weather background shows through.
 class ForecastPanel extends StatelessWidget {
   const ForecastPanel({
     super.key,
@@ -23,13 +24,7 @@ class ForecastPanel extends StatelessWidget {
         borderRadius: BorderRadius.circular(borderRadius),
       ),
       padding: padding,
-      child: DefaultTextStyle.merge(
-        style: const TextStyle(color: AppColors.panelText),
-        child: IconTheme.merge(
-          data: const IconThemeData(color: AppColors.panelText),
-          child: child,
-        ),
-      ),
+      child: child,
     );
   }
 }

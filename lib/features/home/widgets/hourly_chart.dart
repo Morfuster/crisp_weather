@@ -95,7 +95,7 @@ class HourlyChart extends StatelessWidget {
                             child: Text(
                               timeLabel,
                               style: const TextStyle(
-                                color: AppColors.panelText,
+                                color: AppColors.textTertiary,
                                 fontSize: 10,
                               ),
                             ),
@@ -122,7 +122,7 @@ class HourlyChart extends StatelessWidget {
                             child: Text(
                               '${h.temperature.round()}°',
                               style: const TextStyle(
-                                color: AppColors.panelText,
+                                color: AppColors.textPrimary,
                                 fontSize: 11,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -144,7 +144,7 @@ class HourlyChart extends StatelessWidget {
                                     : '${h.precipitation.toStringAsFixed(1)}mm',
                                 style: TextStyle(
                                   color: isSnow
-                                      ? AppColors.panelText
+                                      ? Colors.white70
                                       : AppColors.accentBlue,
                                   fontSize: 9,
                                   fontWeight: FontWeight.w600,
@@ -291,7 +291,7 @@ class _HourlyChartPainter extends CustomPainter {
       ..color = AppColors.accentBlue
       ..style = PaintingStyle.fill;
     final dotBorderPaint = Paint()
-      ..color = AppColors.panelFill
+      ..color = Colors.white
       ..strokeWidth = 1.5
       ..style = PaintingStyle.stroke;
 
