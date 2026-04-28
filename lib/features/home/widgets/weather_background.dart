@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'dart:math' as math;
 
-import '../../../shared/theme/weather_background_image.dart';
-import '../../../shared/theme/weather_gradients.dart';
+import 'package:flutter/material.dart';
+
+import '../../../shared/theme/animated_weather_painter.dart';
 
 class WeatherBackground extends StatefulWidget {
   const WeatherBackground({
@@ -20,67 +20,195 @@ class WeatherBackground extends StatefulWidget {
   State<WeatherBackground> createState() => _WeatherBackgroundState();
 }
 
-class _WeatherBackgroundState extends State<WeatherBackground> {
-  static final Map<String, bool> _assetExistsCache = {};
+class _WeatherBackgroundState extends State<WeatherBackground>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late WeatherScene _scene;
+  late WeatherScene _prevScene;
 
-  String? _confirmedAsset;
-  String? _lastCandidate;
+  // Particle pools — generated once per scene, reused every frame
+  final _rng = math.Random(42);
+  late List<dynamic> _particles; // typed per scene below
+
+  // Lightning flash state
+  double _flashPhase = 0;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _checkAsset();
+  void initState() {
+    super.initState();
+    _scene = resolveScene(widget.wmoCode, widget.localTime);
+    _prevScene = _scene;
+    _particles = _buildParticles(_scene);
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 120),
+    )..repeat();
+
+    _controller.addListener(() {
+      if (_scene == WeatherScene.stormy) {
+        setState(() => _flashPhase = _controller.value);
+      }
+    });
   }
 
   @override
   void didUpdateWidget(WeatherBackground old) {
     super.didUpdateWidget(old);
-    if (old.wmoCode != widget.wmoCode) {
-      _checkAsset();
+    final next = resolveScene(widget.wmoCode, widget.localTime);
+    if (next != _scene) {
+      _prevScene = _scene;
+      _scene = next;
+      _particles = _buildParticles(_scene);
     }
   }
 
-  void _checkAsset() {
-    final candidate = resolveBackgroundAsset(widget.wmoCode, widget.localTime);
-    if (candidate == _lastCandidate) return;
-    _lastCandidate = candidate;
+  List<dynamic> _buildParticles(WeatherScene scene) => switch (scene) {
+        WeatherScene.rainy       => RainPainter.generate(120, _rng),
+        WeatherScene.stormy      => RainPainter.generate(180, _rng),
+        WeatherScene.snowy       => SnowPainter.generate(80, _rng),
+        WeatherScene.nightClear  => StarsPainter.generate(90, _rng),
+        WeatherScene.nightCloudy => StarsPainter.generate(30, _rng),
+        _                        => <dynamic>[],
+      };
 
-    if (candidate == null) {
-      setState(() => _confirmedAsset = null);
-      return;
-    }
-
-    if (_assetExistsCache.containsKey(candidate)) {
-      setState(() =>
-          _confirmedAsset = _assetExistsCache[candidate]! ? candidate : null);
-      return;
-    }
-
-    rootBundle.load(candidate).then((_) {
-      _assetExistsCache[candidate] = true;
-      if (mounted) setState(() => _confirmedAsset = candidate);
-    }).catchError((_) {
-      _assetExistsCache[candidate] = false;
-      if (mounted) setState(() => _confirmedAsset = null);
-    });
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final gradient = resolveGradient(widget.wmoCode, widget.localTime);
-    return Stack(
-      fit: StackFit.expand,
-      children: [
-        if (_confirmedAsset != null)
-          Image.asset(_confirmedAsset!, fit: BoxFit.cover)
-        else
-          AnimatedContainer(
-            duration: const Duration(milliseconds: 800),
-            decoration: BoxDecoration(gradient: gradient),
-          ),
-        Container(color: Colors.black.withAlpha(80)),
-        widget.child,
-      ],
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, child) {
+        final progress = _controller.value;
+        final gradient = sceneGradient(_scene);
+        final prevGradient = sceneGradient(_prevScene);
+
+        return Stack(
+          fit: StackFit.expand,
+          children: [
+            // Gradient background — animated crossfade on scene change
+            TweenAnimationBuilder<double>(
+              tween: Tween(begin: 0.0, end: 1.0),
+              duration: const Duration(milliseconds: 1200),
+              key: ValueKey(_scene),
+              builder: (ctx, t, child) => Container(
+                decoration: BoxDecoration(
+                  gradient: t >= 1.0
+                      ? gradient
+                      : LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: List.generate(
+                            gradient.colors.length,
+                            (i) => Color.lerp(
+                              prevGradient.colors[
+                                  i.clamp(0, prevGradient.colors.length - 1)],
+                              gradient.colors[i],
+                              t,
+                            )!,
+                          ),
+                        ),
+                ),
+              ),
+            ),
+
+            // Particle / effect layer
+            ..._buildEffectLayers(progress),
+
+            // Dark overlay for text readability
+            Container(color: Colors.black.withAlpha(70)),
+
+            // Content
+            child!,
+          ],
+        );
+      },
+      child: widget.child,
     );
   }
+
+  List<Widget> _buildEffectLayers(double progress) => switch (_scene) {
+        WeatherScene.sunnyDay => [
+            CustomPaint(
+              painter: SunRaysPainter(progress: progress),
+              size: Size.infinite,
+            ),
+          ],
+        WeatherScene.cloudyDay => [
+            CustomPaint(
+              painter: CloudPainter(progress: progress, isNight: false),
+              size: Size.infinite,
+            ),
+          ],
+        WeatherScene.rainy => [
+            CustomPaint(
+              painter: CloudPainter(progress: progress, isNight: false),
+              size: Size.infinite,
+            ),
+            CustomPaint(
+              painter: RainPainter(
+                  progress: progress,
+                  drops: _particles.cast()),
+              size: Size.infinite,
+            ),
+          ],
+        WeatherScene.stormy => [
+            CustomPaint(
+              painter: CloudPainter(progress: progress, isNight: false),
+              size: Size.infinite,
+            ),
+            CustomPaint(
+              painter: RainPainter(
+                  progress: progress,
+                  drops: _particles.cast()),
+              size: Size.infinite,
+            ),
+            CustomPaint(
+              painter: LightningPainter(
+                  progress: progress, flashPhase: _flashPhase),
+              size: Size.infinite,
+            ),
+          ],
+        WeatherScene.snowy => [
+            CustomPaint(
+              painter: CloudPainter(progress: progress, isNight: false),
+              size: Size.infinite,
+            ),
+            CustomPaint(
+              painter: SnowPainter(
+                  progress: progress,
+                  flakes: _particles.cast()),
+              size: Size.infinite,
+            ),
+          ],
+        WeatherScene.nightClear => [
+            CustomPaint(
+              painter: StarsPainter(
+                  progress: progress,
+                  stars: _particles.cast()),
+              size: Size.infinite,
+            ),
+          ],
+        WeatherScene.nightCloudy => [
+            CustomPaint(
+              painter: StarsPainter(
+                  progress: progress,
+                  stars: _particles.cast()),
+              size: Size.infinite,
+            ),
+            CustomPaint(
+              painter: CloudPainter(progress: progress, isNight: true),
+              size: Size.infinite,
+            ),
+          ],
+        WeatherScene.foggy => [
+            CustomPaint(
+              painter: FogPainter(progress: progress),
+              size: Size.infinite,
+            ),
+          ],
+      };
 }
