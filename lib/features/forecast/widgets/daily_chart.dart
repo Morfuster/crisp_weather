@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 
 import '../../../core/models/daily_forecast.dart';
 import '../../../shared/theme/app_colors.dart';
+import '../../../shared/widgets/forecast_panel.dart';
 import '../../../shared/widgets/weather_icon.dart';
 
 class DailyChart extends StatelessWidget {
@@ -38,9 +39,14 @@ class DailyChart extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
+        Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: ForecastPanel(
+            padding: EdgeInsets.zero,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
           child: SizedBox(
             width: totalW,
             height: totalH,
@@ -176,6 +182,9 @@ class DailyChart extends StatelessWidget {
                   }),
                 ),
               ],
+            ),
+          ),
+        ),
             ),
           ),
         ),

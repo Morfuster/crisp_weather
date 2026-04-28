@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 
 import '../../../core/models/hourly_forecast.dart';
 import '../../../shared/theme/app_colors.dart';
+import '../../../shared/widgets/forecast_panel.dart';
 import '../../../shared/widgets/weather_icon.dart';
 
 class HourlyChart extends StatelessWidget {
@@ -33,11 +34,16 @@ class HourlyChart extends StatelessWidget {
 
     final totalWidth = _columnWidth * hourly.length;
 
-    return SizedBox(
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: ForecastPanel(
+        padding: EdgeInsets.zero,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(16),
+          child: SizedBox(
       height: _topRowHeight + _chartHeight + _bottomRowHeight,
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: SizedBox(
           width: totalWidth,
           child: Stack(
@@ -150,6 +156,9 @@ class HourlyChart extends StatelessWidget {
                 }),
               ),
             ],
+          ),
+        ),
+      ),
           ),
         ),
       ),

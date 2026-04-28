@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../../core/models/hourly_forecast.dart';
-import '../../../shared/widgets/glass_card.dart';
+import '../../../shared/widgets/forecast_panel.dart';
 import '../../../shared/widgets/weather_icon.dart';
 
 class HourlyScroll extends StatelessWidget {
@@ -34,9 +34,9 @@ class _HourlyItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final timeLabel = DateFormat('HH:mm').format(entry.time);
-    return GlassCard(
+    return ForecastPanel(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-      borderRadius: 12,
+      borderRadius: 14,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

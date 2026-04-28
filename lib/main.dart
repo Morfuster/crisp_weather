@@ -82,21 +82,33 @@ class CrispWeatherApp extends StatelessWidget {
               ),
         ),
       ],
-      child: Consumer<SettingsProvider>(
-        builder: (context, settings, _) => MediaQuery(
-          data: MediaQuery.of(context)
-              .copyWith(textScaler: TextScaler.linear(settings.textScale)),
-          child: MaterialApp(
-            title: 'CrispWeather',
-            debugShowCheckedModeBanner: false,
-            theme: buildTheme(),
-            localizationsDelegates: context.localizationDelegates,
-            supportedLocales: context.supportedLocales,
-            locale: context.locale,
-            home: const _AppStartup(),
-          ),
-        ),
+      child: MaterialApp(
+        title: 'CrispWeather',
+        debugShowCheckedModeBanner: false,
+        theme: buildTheme(),
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        locale: context.locale,
+        home: const _TextScaleWrapper(child: _AppStartup()),
       ),
+    );
+  }
+}
+
+class _TextScaleWrapper extends StatelessWidget {
+  const _TextScaleWrapper({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<SettingsProvider>(
+      builder: (ctx, settings, ch) => MediaQuery(
+        data: MediaQuery.of(ctx)
+            .copyWith(textScaler: TextScaler.linear(settings.textScale)),
+        child: ch!,
+      ),
+      child: child,
     );
   }
 }
