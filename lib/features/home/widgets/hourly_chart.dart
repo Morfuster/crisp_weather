@@ -70,7 +70,7 @@ class HourlyChart extends StatelessWidget {
                   final h = hourly[i];
                   final total = h.precipitation + h.snowfall;
                   final isSnow = h.snowfall > h.precipitation;
-                  final timeLabel = DateFormat('HH:mm').format(h.time);
+                  final timeLabel = DateFormat('h a').format(h.time).toLowerCase();
 
                   // Normalized temp position (0 = bottom, 1 = top)
                   final norm =

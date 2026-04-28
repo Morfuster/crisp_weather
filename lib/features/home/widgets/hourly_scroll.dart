@@ -33,10 +33,11 @@ class _HourlyItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final timeLabel = DateFormat('HH:mm').format(entry.time);
+    final timeLabel = DateFormat('h a').format(entry.time).toLowerCase();
     return ForecastPanel(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       borderRadius: 14,
+      pressable: true,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
