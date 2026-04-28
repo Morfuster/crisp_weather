@@ -34,9 +34,9 @@ abstract final class AppColors {
   static const Color glassBorder = Color(0x40FFFFFF);
   static const Color glassWhiteDark = Color(0x14FFFFFF);
 
-  // Overcast-style panel (solid semi-opaque dark)
-  static const Color panelFill = Color(0xCC1A2035);
-  static const Color panelBorder = Color(0x33FFFFFF);
+  // Overcast-style panel (light semi-opaque white)
+  static const Color panelFill = Color(0x33FFFFFF);
+  static const Color panelBorder = Color(0x22FFFFFF);
 
   // Text
   static const Color textPrimary = Color(0xFFFFFFFF);
