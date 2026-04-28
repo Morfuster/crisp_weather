@@ -104,7 +104,7 @@ class DailyChart extends StatelessWidget {
                               child: Text(
                                 _dateLabel(d.date, i),
                                 style: const TextStyle(
-                                  color: AppColors.textTertiary,
+                                  color: Colors.white,
                                   fontSize: 10,
                                 ),
                                 textAlign: TextAlign.center,
@@ -132,7 +132,7 @@ class DailyChart extends StatelessWidget {
                               child: Text(
                                 '${d.tempMax.round()}°',
                                 style: const TextStyle(
-                                  color: Color(0xFFFF6B6B),
+                                  color: Colors.white,
                                   fontSize: 11,
                                   fontWeight: FontWeight.w700,
                                 ),
@@ -149,7 +149,7 @@ class DailyChart extends StatelessWidget {
                               child: Text(
                                 '${d.tempMin.round()}°',
                                 style: const TextStyle(
-                                  color: Color(0xFF64B5F6),
+                                  color: Colors.white,
                                   fontSize: 11,
                                   fontWeight: FontWeight.w700,
                                 ),
@@ -247,7 +247,7 @@ class _LegendItem extends StatelessWidget {
         const SizedBox(width: 5),
         Text(label,
             style: const TextStyle(
-                color: AppColors.textTertiary, fontSize: 10)),
+                color: Colors.white, fontSize: 10)),
       ],
     );
   }
