@@ -1,6 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/models/city.dart';
 import '../../data/services/geocoding_service.dart';
@@ -104,8 +106,48 @@ class _CitiesScreenState extends State<CitiesScreen> {
                       context.read<CitiesProvider>().detectCurrentLocation(),
                 ),
               ),
+            const _AttributionFooter(),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _AttributionFooter extends StatelessWidget {
+  const _AttributionFooter();
+
+  static final _url = Uri.parse('https://open-meteo.com');
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(Icons.cloud_outlined, size: 14, color: AppColors.textTertiary),
+          const SizedBox(width: 6),
+          Text.rich(
+            TextSpan(
+              style: const TextStyle(color: AppColors.textTertiary, fontSize: 11),
+              children: [
+                const TextSpan(text: 'Weather data: '),
+                TextSpan(
+                  text: 'Open-Meteo.com',
+                  style: const TextStyle(
+                    color: AppColors.accentBlue,
+                    decoration: TextDecoration.underline,
+                    decorationColor: AppColors.accentBlue,
+                  ),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () => launchUrl(_url, mode: LaunchMode.externalApplication),
+                ),
+                const TextSpan(text: ' — free & open source'),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

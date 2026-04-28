@@ -131,37 +131,58 @@ class _WeatherIconPainter extends CustomPainter {
   // ── Cloud ─────────────────────────────────────────────────────────────────
 
   void _drawCloud(Canvas canvas, double cx, double cy, double w, double h) {
-    final paint = Paint()
-      ..color = Colors.white.withAlpha(230)
-      ..style = PaintingStyle.fill;
     final shadow = Paint()
-      ..color = Colors.black.withAlpha(30)
-      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 2);
+      ..color = Colors.black.withAlpha(25)
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 3);
+    final paint = Paint()
+      ..color = Colors.white.withAlpha(235)
+      ..style = PaintingStyle.fill;
 
     final path = _cloudPath(cx, cy, w, h);
+    canvas.save();
+    canvas.translate(1, 2);
     canvas.drawPath(path, shadow);
+    canvas.restore();
     canvas.drawPath(path, paint);
   }
 
+  // Proper cloud built from 4 overlapping circles clipped to a rounded
+  // bottom rectangle — no hard rectangle edges visible.
   Path _cloudPath(double cx, double cy, double w, double h) {
-    // Three overlapping circles forming a cloud silhouette
-    final r = h * 0.5;
-    final leftX = cx - w * 0.28;
-    final rightX = cx + w * 0.24;
-    final midY = cy;
+    final halfW = w * 0.5;
+    final left = cx - halfW;
+    final right = cx + halfW;
 
+    // Bubble radii
+    final rL = h * 0.38;   // left bubble
+    final rM = h * 0.52;   // centre-left bubble (tallest)
+    final rR = h * 0.40;   // right bubble
+    final rFR = h * 0.30;  // far-right small bubble
+
+    // Bubble centres (all on roughly the same baseline)
+    final baseY = cy + h * 0.10;
+    final cL  = Offset(left  + rL  * 0.9,  baseY - rL  * 0.05);
+    final cM  = Offset(cx    - w   * 0.06, baseY - rM  * 0.18);
+    final cR  = Offset(right - rR  * 1.1,  baseY - rR  * 0.02);
+    final cFR = Offset(right - rFR * 0.5,  baseY + rFR * 0.08);
+
+    // Bottom of the cloud body
+    final bottom = baseY + h * 0.48;
+    final cornerR = h * 0.22;
+
+    // Union of all four circles
     final path = Path()
-      ..addOval(Rect.fromCircle(center: Offset(leftX, midY), radius: r * 0.78))
-      ..addOval(Rect.fromCircle(center: Offset(cx, midY - h * 0.18), radius: r))
-      ..addOval(Rect.fromCircle(center: Offset(rightX, midY + h * 0.04), radius: r * 0.72));
+      ..addOval(Rect.fromCircle(center: cL,  radius: rL))
+      ..addOval(Rect.fromCircle(center: cM,  radius: rM))
+      ..addOval(Rect.fromCircle(center: cR,  radius: rR))
+      ..addOval(Rect.fromCircle(center: cFR, radius: rFR));
 
-    // Fill the bottom rectangle to merge the circles into a solid base
-    path.addRect(Rect.fromLTRB(
-      leftX - r * 0.78,
-      midY,
-      rightX + r * 0.72,
-      midY + r * 0.72,
+    // Rounded bottom bar that fills between the bubbles without sharp corners
+    path.addRRect(RRect.fromRectAndRadius(
+      Rect.fromLTRB(left, baseY - h * 0.08, right, bottom),
+      Radius.circular(cornerR),
     ));
+
     return path;
   }
 

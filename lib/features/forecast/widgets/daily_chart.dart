@@ -13,10 +13,10 @@ class DailyChart extends StatelessWidget {
   final List<DailyForecast> daily;
 
   static const _colWidth = 72.0;
-  static const _iconRowH = 44.0;   // icon
+  static const _dateRowH = 36.0;   // day name + date  ← NOW FIRST (top)
+  static const _iconRowH = 38.0;   // weather icon     ← below date
   static const _curveH = 120.0;    // temp curves zone
   static const _barZoneH = 56.0;   // precip bars + value label
-  static const _dateRowH = 36.0;   // day name + date
 
   @override
   Widget build(BuildContext context) {
@@ -46,9 +46,9 @@ class DailyChart extends StatelessWidget {
             height: totalH,
             child: Stack(
               children: [
-                // Curves + bars painted behind
+                // Curves + bars painted behind — starts after date + icon rows
                 Positioned(
-                  top: _iconRowH,
+                  top: _dateRowH + _iconRowH,
                   left: 0,
                   right: 0,
                   height: _curveH + _barZoneH,
@@ -74,10 +74,10 @@ class DailyChart extends StatelessWidget {
                     final minNorm =
                         (d.tempMin - minTemp) / tempRange;
 
-                    final maxDotY = _iconRowH +
+                    final maxDotY = _dateRowH + _iconRowH +
                         _curveH * (1 - maxNorm) * 0.8 +
                         _curveH * 0.1;
-                    final minDotY = _iconRowH +
+                    final minDotY = _dateRowH + _iconRowH +
                         _curveH * (1 - minNorm) * 0.8 +
                         _curveH * 0.1;
 
@@ -88,15 +88,32 @@ class DailyChart extends StatelessWidget {
                       height: totalH + _dateRowH,
                       child: Stack(
                         children: [
-                          // Weather icon
+                          // Day name + date — topmost row
                           Positioned(
-                            top: 2,
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            height: _dateRowH,
+                            child: Center(
+                              child: Text(
+                                _dateLabel(d.date, i),
+                                style: const TextStyle(
+                                  color: AppColors.textTertiary,
+                                  fontSize: 10,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                          // Weather icon — below the date row
+                          Positioned(
+                            top: _dateRowH + 2,
                             left: 0,
                             right: 0,
                             height: _iconRowH - 4,
                             child: Center(
                               child: WeatherIcon(
-                                  code: d.weatherCode, size: 26),
+                                  code: d.weatherCode, size: 28),
                             ),
                           ),
                           // Max temp label — 14px above the dot
@@ -136,7 +153,7 @@ class DailyChart extends StatelessWidget {
                           // Precip value above bar
                           if (precip > 0)
                             Positioned(
-                              top: _iconRowH + _curveH - 2,
+                              top: _dateRowH + _iconRowH + _curveH - 2,
                               left: 0,
                               right: 0,
                               height: 16,
@@ -153,23 +170,6 @@ class DailyChart extends StatelessWidget {
                                 ),
                               ),
                             ),
-                          // Date label at bottom
-                          Positioned(
-                            top: _iconRowH + _curveH + _barZoneH,
-                            left: 0,
-                            right: 0,
-                            height: _dateRowH,
-                            child: Center(
-                              child: Text(
-                                _dateLabel(d.date, i),
-                                style: const TextStyle(
-                                  color: AppColors.textTertiary,
-                                  fontSize: 10,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ),
                         ],
                       ),
                     );
