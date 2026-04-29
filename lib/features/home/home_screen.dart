@@ -14,6 +14,7 @@ import 'widgets/current_weather_card.dart';
 import 'widgets/hourly_chart.dart';
 import 'widgets/moon_phase_card.dart';
 import 'widgets/sunrise_sunset_card.dart';
+import 'widgets/weather_alert_banner.dart';
 import 'widgets/weather_background.dart';
 import 'widgets/weather_stats_grid.dart';
 
@@ -101,6 +102,70 @@ class _HomeScreenState extends State<HomeScreen> {
                       selected: {settings.textSize},
                       onSelectionChanged: (sel) =>
                           ctx.read<SettingsProvider>().setTextSize(sel.first),
+                    ),
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(16, 20, 16, 0),
+                  child: Divider(color: Colors.white12, height: 1),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+                  child: Text('tempUnit'.tr(),
+                      style: Theme.of(ctx).textTheme.titleMedium),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Consumer<SettingsProvider>(
+                    builder: (c, settings, _) => SegmentedButton<TempUnit>(
+                      style: SegmentedButton.styleFrom(
+                        backgroundColor: const Color(0xFF0D1B2A),
+                        selectedBackgroundColor: const Color(0xFF00B4D8),
+                        selectedForegroundColor: Colors.white,
+                        foregroundColor: Colors.white70,
+                      ),
+                      segments: TempUnit.values
+                          .map((u) => ButtonSegment<TempUnit>(
+                                value: u,
+                                label: Text(u.label,
+                                    style: const TextStyle(fontSize: 13)),
+                              ))
+                          .toList(),
+                      selected: {settings.tempUnit},
+                      onSelectionChanged: (sel) =>
+                          ctx.read<SettingsProvider>().setTempUnit(sel.first),
+                    ),
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(16, 20, 16, 0),
+                  child: Divider(color: Colors.white12, height: 1),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+                  child: Text('windUnit'.tr(),
+                      style: Theme.of(ctx).textTheme.titleMedium),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Consumer<SettingsProvider>(
+                    builder: (c, settings, _) => SegmentedButton<WindUnit>(
+                      style: SegmentedButton.styleFrom(
+                        backgroundColor: const Color(0xFF0D1B2A),
+                        selectedBackgroundColor: const Color(0xFF00B4D8),
+                        selectedForegroundColor: Colors.white,
+                        foregroundColor: Colors.white70,
+                      ),
+                      segments: WindUnit.values
+                          .map((u) => ButtonSegment<WindUnit>(
+                                value: u,
+                                label: Text(u.label,
+                                    style: const TextStyle(fontSize: 11)),
+                              ))
+                          .toList(),
+                      selected: {settings.windUnit},
+                      onSelectionChanged: (sel) =>
+                          ctx.read<SettingsProvider>().setWindUnit(sel.first),
                     ),
                   ),
                 ),
@@ -201,6 +266,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   CurrentWeatherCard(
                                     weather: data.current,
                                     today: data.daily.first,
+                                  ),
+                                  WeatherAlertBanner(
+                                    wmoCode: data.current.weatherCode,
                                   ),
                                   const SizedBox(height: 16),
                                   if (data.hourly.isNotEmpty)

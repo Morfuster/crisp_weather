@@ -2,8 +2,10 @@ import 'dart:math' as math;
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../core/models/current_weather.dart';
+import '../../../core/settings/settings_provider.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/widgets/forecast_panel.dart';
 
@@ -39,12 +41,7 @@ class WeatherStatsGrid extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Expanded(
-                  child: _SimpleTile(
-                    icon: Icons.thermostat_rounded,
-                    title: 'dewPoint'.tr(),
-                    value: '${weather.dewPoint.round()}°',
-                    subtitle: 'dewPointDesc'.tr(),
-                  ),
+                  child: _DewPointTile(dewPoint: weather.dewPoint),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
@@ -218,7 +215,7 @@ class _WindCompassTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '${speed.round()} ${'kmh'.tr()}',
+                      context.watch<SettingsProvider>().windUnit.format(speed),
                       style: theme.textTheme.headlineMedium,
                     ),
                     Text(
@@ -319,6 +316,25 @@ class _CompassPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_CompassPainter old) => old.degrees != degrees;
+}
+
+// ── Dew point tile (unit-aware) ───────────────────────────────────────────────
+
+class _DewPointTile extends StatelessWidget {
+  const _DewPointTile({required this.dewPoint});
+
+  final double dewPoint;
+
+  @override
+  Widget build(BuildContext context) {
+    final settings = context.watch<SettingsProvider>();
+    return _SimpleTile(
+      icon: Icons.thermostat_rounded,
+      title: 'dewPoint'.tr(),
+      value: settings.tempUnit.format(dewPoint),
+      subtitle: 'dewPointDesc'.tr(),
+    );
+  }
 }
 
 // ── Simple stat tile ──────────────────────────────────────────────────────────

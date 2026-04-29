@@ -18,14 +18,12 @@
   "textSize": "Tekstgrootte",
   "noCitiesYet": "Geen steden opgeslagen.\nZoek om er een toe te voegen.",
   "searchFailed": "Zoeken mislukt",
-
   "today": "Vandaag",
-  "legendMax": "Max (°C)",
-  "legendMin": "Min (°C)",
+  "legendMax": "Max ({})",
+  "legendMin": "Min ({})",
   "legendRain": "Regen (mm)",
   "weatherData": "Weerdata:",
   "freeOpenSource": "gratis & open source",
-
   "stayIndoors": "Binnen blijven",
   "stayIndoorsReason": "Onweer actief — blijf veilig binnen.",
   "readBook": "Een boek lezen",
@@ -65,7 +63,6 @@
   "picnicSunnyReason": "Zonnige dag ideaal voor buiten eten.",
   "walkingDefaultReason": "Een goede dag voor frisse lucht.",
   "readBookDefaultReason": "Rustige omstandigheden voor binnenshuis ontspannen.",
-
   "wmo0": "Heldere hemel",
   "wmo1": "Overwegend helder",
   "wmo2": "Gedeeltelijk bewolkt",
@@ -95,7 +92,6 @@
   "wmo96": "Onweer met hagel",
   "wmo99": "Onweer met zware hagel",
   "wmoUnknown": "Onbekend",
-
   "statsTitle": "Details",
   "sunriseSunset": "Zonsopgang / -ondergang",
   "uvIndex": "UV-index",
@@ -108,7 +104,6 @@
   "dewPointDesc": "Dauwpunttemperatuur",
   "pressure": "Luchtdruk",
   "visibility": "Zicht",
-
   "moonPhase": "Maanfase",
   "illuminated": "verlicht",
   "moonNew": "Nieuwe maan",
@@ -118,5 +113,8 @@
   "moonFull": "Volle maan",
   "moonWaningGibbous": "Afnemende maan",
   "moonLastQuarter": "Laatste kwartier",
-  "moonWaningCrescent": "Afnemende sikkel"
+  "moonWaningCrescent": "Afnemende sikkel",
+  "tempUnit": "Temperatuur",
+  "windUnit": "Windsnelheid",
+  "weatherAlert": "Weerwaarschuwing"
 }

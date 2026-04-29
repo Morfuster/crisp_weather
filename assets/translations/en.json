@@ -18,14 +18,12 @@
   "textSize": "Text Size",
   "noCitiesYet": "No saved cities.\nSearch to add one.",
   "searchFailed": "Search failed",
-
   "today": "Today",
-  "legendMax": "Max (°C)",
-  "legendMin": "Min (°C)",
+  "legendMax": "Max ({})",
+  "legendMin": "Min ({})",
   "legendRain": "Rain (mm)",
   "weatherData": "Weather data:",
   "freeOpenSource": "free & open source",
-
   "stayIndoors": "Stay indoors",
   "stayIndoorsReason": "Thunderstorm active — stay safe inside.",
   "readBook": "Read a book",
@@ -65,7 +63,6 @@
   "picnicSunnyReason": "Sunny day great for outdoor dining.",
   "walkingDefaultReason": "A good day to get some fresh air.",
   "readBookDefaultReason": "Relaxed conditions for indoor downtime.",
-
   "wmo0": "Clear sky",
   "wmo1": "Mainly clear",
   "wmo2": "Partly cloudy",
@@ -95,7 +92,6 @@
   "wmo96": "Thunderstorm with hail",
   "wmo99": "Thunderstorm with heavy hail",
   "wmoUnknown": "Unknown",
-
   "statsTitle": "Details",
   "sunriseSunset": "Sunrise / Sunset",
   "uvIndex": "UV Index",
@@ -108,7 +104,6 @@
   "dewPointDesc": "Dew point temperature",
   "pressure": "Pressure",
   "visibility": "Visibility",
-
   "moonPhase": "Moon Phase",
   "illuminated": "illuminated",
   "moonNew": "New Moon",
@@ -118,5 +113,8 @@
   "moonFull": "Full Moon",
   "moonWaningGibbous": "Waning Gibbous",
   "moonLastQuarter": "Last Quarter",
-  "moonWaningCrescent": "Waning Crescent"
+  "moonWaningCrescent": "Waning Crescent",
+  "tempUnit": "Temperature",
+  "windUnit": "Wind Speed",
+  "weatherAlert": "Weather Alert"
 }

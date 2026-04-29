@@ -18,14 +18,12 @@
   "textSize": "Размер текста",
   "noCitiesYet": "Нет сохранённых городов.\nНайдите и добавьте город.",
   "searchFailed": "Ошибка поиска",
-
   "today": "Сегодня",
-  "legendMax": "Макс (°C)",
-  "legendMin": "Мин (°C)",
+  "legendMax": "Макс ({})",
+  "legendMin": "Мин ({})",
   "legendRain": "Осадки (мм)",
   "weatherData": "Данные о погоде:",
   "freeOpenSource": "бесплатно и с открытым кодом",
-
   "stayIndoors": "Остаться дома",
   "stayIndoorsReason": "Гроза активна — оставайтесь в безопасности внутри.",
   "readBook": "Читать книгу",
@@ -65,7 +63,6 @@
   "picnicSunnyReason": "Солнечный день идеален для еды на улице.",
   "walkingDefaultReason": "Хороший день подышать свежим воздухом.",
   "readBookDefaultReason": "Спокойные условия для отдыха дома.",
-
   "wmo0": "Ясное небо",
   "wmo1": "Преимущественно ясно",
   "wmo2": "Переменная облачность",
@@ -95,7 +92,6 @@
   "wmo96": "Гроза с градом",
   "wmo99": "Гроза с крупным градом",
   "wmoUnknown": "Неизвестно",
-
   "statsTitle": "Подробности",
   "sunriseSunset": "Восход / Закат",
   "uvIndex": "УФ-индекс",
@@ -108,7 +104,6 @@
   "dewPointDesc": "Температура точки росы",
   "pressure": "Давление",
   "visibility": "Видимость",
-
   "moonPhase": "Фаза луны",
   "illuminated": "освещено",
   "moonNew": "Новолуние",
@@ -118,5 +113,8 @@
   "moonFull": "Полнолуние",
   "moonWaningGibbous": "Убывающая луна",
   "moonLastQuarter": "Последняя четверть",
-  "moonWaningCrescent": "Убывающий серп"
+  "moonWaningCrescent": "Убывающий серп",
+  "tempUnit": "Температура",
+  "windUnit": "Скорость ветра",
+  "weatherAlert": "Погодное предупреждение"
 }

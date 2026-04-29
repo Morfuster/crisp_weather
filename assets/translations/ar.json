@@ -18,14 +18,12 @@
   "textSize": "حجم النص",
   "noCitiesYet": "لا مدن محفوظة.\nابحث لإضافة مدينة.",
   "searchFailed": "فشل البحث",
-
   "today": "اليوم",
-  "legendMax": "الأقصى (°C)",
-  "legendMin": "الأدنى (°C)",
+  "legendMax": "أقصى ({})",
+  "legendMin": "أدنى ({})",
   "legendRain": "المطر (مم)",
   "weatherData": "بيانات الطقس:",
   "freeOpenSource": "مجاني ومفتوح المصدر",
-
   "stayIndoors": "ابق في المنزل",
   "stayIndoorsReason": "عاصفة رعدية — ابق آمناً في الداخل.",
   "readBook": "اقرأ كتابًا",
@@ -65,7 +63,6 @@
   "picnicSunnyReason": "يوم مشمس مثالي لتناول الطعام في الخارج.",
   "walkingDefaultReason": "يوم جيد للحصول على هواء نقي.",
   "readBookDefaultReason": "ظروف هادئة للراحة في المنزل.",
-
   "wmo0": "سماء صافية",
   "wmo1": "صافٍ في معظمه",
   "wmo2": "غائم جزئياً",
@@ -95,7 +92,6 @@
   "wmo96": "عاصفة رعدية مع برد",
   "wmo99": "عاصفة رعدية مع برد كثيف",
   "wmoUnknown": "غير معروف",
-
   "statsTitle": "التفاصيل",
   "sunriseSunset": "الشروق / الغروب",
   "uvIndex": "مؤشر UV",
@@ -108,7 +104,6 @@
   "dewPointDesc": "درجة حرارة نقطة الندى",
   "pressure": "الضغط الجوي",
   "visibility": "الرؤية",
-
   "moonPhase": "طور القمر",
   "illuminated": "مضاء",
   "moonNew": "القمر الجديد",
@@ -118,5 +113,8 @@
   "moonFull": "البدر",
   "moonWaningGibbous": "الأحدب المتناقص",
   "moonLastQuarter": "الربع الأخير",
-  "moonWaningCrescent": "الهلال المتناقص"
+  "moonWaningCrescent": "الهلال المتناقص",
+  "tempUnit": "درجة الحرارة",
+  "windUnit": "سرعة الرياح",
+  "weatherAlert": "تنبيه جوي"
 }

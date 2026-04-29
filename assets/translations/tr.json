@@ -18,14 +18,12 @@
   "textSize": "Metin boyutu",
   "noCitiesYet": "Kayıtlı şehir yok.\nEklemek için arayın.",
   "searchFailed": "Arama başarısız",
-
   "today": "Bugün",
-  "legendMax": "Maks (°C)",
-  "legendMin": "Min (°C)",
+  "legendMax": "Maks ({})",
+  "legendMin": "Min ({})",
   "legendRain": "Yağış (mm)",
   "weatherData": "Hava verisi:",
   "freeOpenSource": "ücretsiz ve açık kaynak",
-
   "stayIndoors": "İçeride kal",
   "stayIndoorsReason": "Fırtına aktif — güvende olmak için içeride kalın.",
   "readBook": "Kitap oku",
@@ -65,7 +63,6 @@
   "picnicSunnyReason": "Açık havada yemek için güneşli bir gün.",
   "walkingDefaultReason": "Temiz hava almak için iyi bir gün.",
   "readBookDefaultReason": "İçeride dinlenmek için sakin koşullar.",
-
   "wmo0": "Açık gökyüzü",
   "wmo1": "Çoğunlukla açık",
   "wmo2": "Kısmen bulutlu",
@@ -95,7 +92,6 @@
   "wmo96": "Dolu ile fırtına",
   "wmo99": "Şiddetli dolu ile fırtına",
   "wmoUnknown": "Bilinmiyor",
-
   "statsTitle": "Ayrıntılar",
   "sunriseSunset": "Gün Doğumu / Batımı",
   "uvIndex": "UV İndeksi",
@@ -108,7 +104,6 @@
   "dewPointDesc": "Çiğ noktası sıcaklığı",
   "pressure": "Basınç",
   "visibility": "Görüş mesafesi",
-
   "moonPhase": "Ay Fazı",
   "illuminated": "aydınlatılmış",
   "moonNew": "Yeni Ay",
@@ -118,5 +113,8 @@
   "moonFull": "Dolunay",
   "moonWaningGibbous": "Küçülen Ay",
   "moonLastQuarter": "Son Dördün",
-  "moonWaningCrescent": "Küçülen Hilal"
+  "moonWaningCrescent": "Küçülen Hilal",
+  "tempUnit": "Sıcaklık",
+  "windUnit": "Rüzgar hızı",
+  "weatherAlert": "Hava uyarısı"
 }

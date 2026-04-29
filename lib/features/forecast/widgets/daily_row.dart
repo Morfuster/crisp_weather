@@ -1,7 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../core/models/daily_forecast.dart';
+import '../../../core/settings/settings_provider.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/widgets/weather_icon.dart';
 
@@ -18,6 +20,7 @@ class DailyRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final settings = context.watch<SettingsProvider>();
     final dayLabel = DateFormat('EEE, MMM d').format(forecast.date);
 
     return Padding(
@@ -41,7 +44,7 @@ class DailyRow extends StatelessWidget {
                 ),
               ),
               Text(
-                '${forecast.tempMax.round()}° / ${forecast.tempMin.round()}°',
+                '${settings.tempUnit.format(forecast.tempMax)} / ${settings.tempUnit.format(forecast.tempMin)}',
                 style: theme.textTheme.bodyLarge,
               ),
             ],

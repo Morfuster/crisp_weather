@@ -18,14 +18,12 @@
   "textSize": "Dimensione testo",
   "noCitiesYet": "Nessuna città salvata.\nCerca per aggiungerne una.",
   "searchFailed": "Ricerca fallita",
-
   "today": "Oggi",
-  "legendMax": "Max (°C)",
-  "legendMin": "Min (°C)",
+  "legendMax": "Max ({})",
+  "legendMin": "Min ({})",
   "legendRain": "Pioggia (mm)",
   "weatherData": "Dati meteo:",
   "freeOpenSource": "gratuito e open source",
-
   "stayIndoors": "Stare in casa",
   "stayIndoorsReason": "Temporale in corso — resta al sicuro dentro casa.",
   "readBook": "Leggere un libro",
@@ -65,7 +63,6 @@
   "picnicSunnyReason": "Giornata di sole ideale per mangiare fuori.",
   "walkingDefaultReason": "Una buona giornata per prendere aria fresca.",
   "readBookDefaultReason": "Condizioni rilassate per stare in casa.",
-
   "wmo0": "Cielo sereno",
   "wmo1": "Prevalentemente sereno",
   "wmo2": "Parzialmente nuvoloso",
@@ -95,7 +92,6 @@
   "wmo96": "Temporale con grandine",
   "wmo99": "Temporale con forte grandine",
   "wmoUnknown": "Sconosciuto",
-
   "statsTitle": "Dettagli",
   "sunriseSunset": "Alba / Tramonto",
   "uvIndex": "Indice UV",
@@ -108,7 +104,6 @@
   "dewPointDesc": "Temperatura del punto di rugiada",
   "pressure": "Pressione",
   "visibility": "Visibilità",
-
   "moonPhase": "Fase lunare",
   "illuminated": "illuminato",
   "moonNew": "Luna nuova",
@@ -118,5 +113,8 @@
   "moonFull": "Luna piena",
   "moonWaningGibbous": "Gibbosa calante",
   "moonLastQuarter": "Ultimo quarto",
-  "moonWaningCrescent": "Falce calante"
+  "moonWaningCrescent": "Falce calante",
+  "tempUnit": "Temperatura",
+  "windUnit": "Velocità del vento",
+  "weatherAlert": "Allerta meteo"
 }

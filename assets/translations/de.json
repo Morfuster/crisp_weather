@@ -18,14 +18,12 @@
   "textSize": "Textgröße",
   "noCitiesYet": "Keine Städte gespeichert.\nSuchen Sie, um eine hinzuzufügen.",
   "searchFailed": "Suche fehlgeschlagen",
-
   "today": "Heute",
-  "legendMax": "Max (°C)",
-  "legendMin": "Min (°C)",
+  "legendMax": "Max ({})",
+  "legendMin": "Min ({})",
   "legendRain": "Regen (mm)",
   "weatherData": "Wetterdaten:",
   "freeOpenSource": "kostenlos & open source",
-
   "stayIndoors": "Drinnen bleiben",
   "stayIndoorsReason": "Gewitter aktiv — bleiben Sie sicher drinnen.",
   "readBook": "Buch lesen",
@@ -65,7 +63,6 @@
   "picnicSunnyReason": "Sonniger Tag ideal für draußen essen.",
   "walkingDefaultReason": "Ein guter Tag für frische Luft.",
   "readBookDefaultReason": "Entspannte Bedingungen für drinnen.",
-
   "wmo0": "Klarer Himmel",
   "wmo1": "Überwiegend klar",
   "wmo2": "Teils bewölkt",
@@ -95,7 +92,6 @@
   "wmo96": "Gewitter mit Hagel",
   "wmo99": "Gewitter mit starkem Hagel",
   "wmoUnknown": "Unbekannt",
-
   "statsTitle": "Details",
   "sunriseSunset": "Sonnenauf- / -untergang",
   "uvIndex": "UV-Index",
@@ -108,7 +104,6 @@
   "dewPointDesc": "Taupunkttemperatur",
   "pressure": "Luftdruck",
   "visibility": "Sichtweite",
-
   "moonPhase": "Mondphase",
   "illuminated": "beleuchtet",
   "moonNew": "Neumond",
@@ -118,5 +113,8 @@
   "moonFull": "Vollmond",
   "moonWaningGibbous": "Abnehmender Mond",
   "moonLastQuarter": "Letztes Viertel",
-  "moonWaningCrescent": "Abnehmende Sichel"
+  "moonWaningCrescent": "Abnehmende Sichel",
+  "tempUnit": "Temperatur",
+  "windUnit": "Windgeschwindigkeit",
+  "weatherAlert": "Wetterwarnung"
 }

@@ -18,14 +18,12 @@
   "textSize": "字体大小",
   "noCitiesYet": "暂无保存的城市。\n搜索以添加城市。",
   "searchFailed": "搜索失败",
-
   "today": "今天",
-  "legendMax": "最高 (°C)",
-  "legendMin": "最低 (°C)",
+  "legendMax": "最高 ({})",
+  "legendMin": "最低 ({})",
   "legendRain": "降雨 (mm)",
   "weatherData": "天气数据：",
   "freeOpenSource": "免费开源",
-
   "stayIndoors": "待在室内",
   "stayIndoorsReason": "雷暴活跃 — 请安全留在室内。",
   "readBook": "读书",
@@ -65,7 +63,6 @@
   "picnicSunnyReason": "阳光明媚，适合户外用餐。",
   "walkingDefaultReason": "出去呼吸新鲜空气的好日子。",
   "readBookDefaultReason": "宁静的天气，适合在家放松。",
-
   "wmo0": "晴天",
   "wmo1": "大部晴天",
   "wmo2": "多云",
@@ -95,7 +92,6 @@
   "wmo96": "雷暴伴冰雹",
   "wmo99": "雷暴伴强冰雹",
   "wmoUnknown": "未知",
-
   "statsTitle": "详情",
   "sunriseSunset": "日出 / 日落",
   "uvIndex": "紫外线指数",
@@ -108,7 +104,6 @@
   "dewPointDesc": "露点温度",
   "pressure": "气压",
   "visibility": "能见度",
-
   "moonPhase": "月相",
   "illuminated": "被照亮",
   "moonNew": "新月",
@@ -118,5 +113,8 @@
   "moonFull": "满月",
   "moonWaningGibbous": "亏凸月",
   "moonLastQuarter": "下弦月",
-  "moonWaningCrescent": "残月"
+  "moonWaningCrescent": "残月",
+  "tempUnit": "温度",
+  "windUnit": "风速",
+  "weatherAlert": "天气预警"
 }

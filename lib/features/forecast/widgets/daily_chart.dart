@@ -2,8 +2,10 @@ import 'dart:math' as math;
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../core/models/daily_forecast.dart';
+import '../../../core/settings/settings_provider.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/widgets/forecast_panel.dart';
 import '../../../shared/widgets/weather_icon.dart';
@@ -23,6 +25,7 @@ class DailyChart extends StatelessWidget {
   Widget build(BuildContext context) {
     if (daily.isEmpty) return const SizedBox.shrink();
 
+    final settings = context.read<SettingsProvider>();
     final allTemps = daily.expand((d) => [d.tempMax, d.tempMin]).toList();
     final minTemp = allTemps.reduce(math.min);
     final maxTemp = allTemps.reduce(math.max);
@@ -131,7 +134,7 @@ class DailyChart extends StatelessWidget {
                             height: 14,
                             child: Center(
                               child: Text(
-                                '${d.tempMax.round()}°',
+                                settings.tempUnit.format(d.tempMax),
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 11,
@@ -148,7 +151,7 @@ class DailyChart extends StatelessWidget {
                             height: 14,
                             child: Center(
                               child: Text(
-                                '${d.tempMin.round()}°',
+                                settings.tempUnit.format(d.tempMin),
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 11,
@@ -190,17 +193,22 @@ class DailyChart extends StatelessWidget {
           ),
         ),
         // Legend
-        Padding(
-          padding: const EdgeInsets.fromLTRB(20, 10, 16, 0),
-          child: Row(
-            children: [
-              _LegendItem(color: const Color(0xFFFF6B6B), label: 'legendMax'.tr()),
-              const SizedBox(width: 16),
-              _LegendItem(color: const Color(0xFF64B5F6), label: 'legendMin'.tr()),
-              const SizedBox(width: 16),
-              _LegendItem(color: AppColors.accentBlue, label: 'legendRain'.tr(), isBar: true),
-            ],
-          ),
+        Builder(
+          builder: (ctx) {
+            final unit = ctx.watch<SettingsProvider>().tempUnit.label;
+            return Padding(
+              padding: const EdgeInsets.fromLTRB(20, 10, 16, 0),
+              child: Row(
+                children: [
+                  _LegendItem(color: const Color(0xFFFF6B6B), label: 'legendMax'.tr(args: [unit])),
+                  const SizedBox(width: 16),
+                  _LegendItem(color: const Color(0xFF64B5F6), label: 'legendMin'.tr(args: [unit])),
+                  const SizedBox(width: 16),
+                  _LegendItem(color: AppColors.accentBlue, label: 'legendRain'.tr(), isBar: true),
+                ],
+              ),
+            );
+          },
         ),
       ],
     );

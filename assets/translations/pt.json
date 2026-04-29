@@ -18,14 +18,12 @@
   "textSize": "Tamanho do texto",
   "noCitiesYet": "Sem cidades salvas.\nPesquise para adicionar uma.",
   "searchFailed": "Pesquisa falhou",
-
   "today": "Hoje",
-  "legendMax": "Máx (°C)",
-  "legendMin": "Mín (°C)",
+  "legendMax": "Máx ({})",
+  "legendMin": "Mín ({})",
   "legendRain": "Chuva (mm)",
   "weatherData": "Dados meteorológicos:",
   "freeOpenSource": "gratuito e open source",
-
   "stayIndoors": "Ficar em casa",
   "stayIndoorsReason": "Tempestade ativa — fique seguro dentro de casa.",
   "readBook": "Ler um livro",
@@ -65,7 +63,6 @@
   "picnicSunnyReason": "Dia ensolarado ideal para comer ao ar livre.",
   "walkingDefaultReason": "Um bom dia para tomar ar fresco.",
   "readBookDefaultReason": "Condições tranquilas para ficar em casa.",
-
   "wmo0": "Céu limpo",
   "wmo1": "Principalmente limpo",
   "wmo2": "Parcialmente nublado",
@@ -95,7 +92,6 @@
   "wmo96": "Trovoada com granizo",
   "wmo99": "Trovoada com granizo forte",
   "wmoUnknown": "Desconhecido",
-
   "statsTitle": "Detalhes",
   "sunriseSunset": "Nascer / Pôr do sol",
   "uvIndex": "Índice UV",
@@ -108,7 +104,6 @@
   "dewPointDesc": "Temperatura do ponto de orvalho",
   "pressure": "Pressão",
   "visibility": "Visibilidade",
-
   "moonPhase": "Fase da lua",
   "illuminated": "iluminado",
   "moonNew": "Lua nova",
@@ -118,5 +113,8 @@
   "moonFull": "Lua cheia",
   "moonWaningGibbous": "Gibosa minguante",
   "moonLastQuarter": "Quarto minguante",
-  "moonWaningCrescent": "Minguante"
+  "moonWaningCrescent": "Minguante",
+  "tempUnit": "Temperatura",
+  "windUnit": "Velocidade do vento",
+  "weatherAlert": "Alerta meteorológico"
 }

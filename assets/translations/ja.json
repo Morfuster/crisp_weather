@@ -18,14 +18,12 @@
   "textSize": "文字サイズ",
   "noCitiesYet": "保存された都市がありません。\n検索して追加してください。",
   "searchFailed": "検索失敗",
-
   "today": "今日",
-  "legendMax": "最高 (°C)",
-  "legendMin": "最低 (°C)",
+  "legendMax": "最高 ({})",
+  "legendMin": "最低 ({})",
   "legendRain": "降水 (mm)",
   "weatherData": "気象データ：",
   "freeOpenSource": "無料・オープンソース",
-
   "stayIndoors": "室内にいる",
   "stayIndoorsReason": "雷雨が発生中 — 安全のために室内にいてください。",
   "readBook": "読書",
@@ -65,7 +63,6 @@
   "picnicSunnyReason": "晴れた日の屋外ランチに最適。",
   "walkingDefaultReason": "新鮮な空気を吸うのに良い日。",
   "readBookDefaultReason": "のんびり室内で過ごす良い条件。",
-
   "wmo0": "快晴",
   "wmo1": "おおむね晴れ",
   "wmo2": "一部曇り",
@@ -95,7 +92,6 @@
   "wmo96": "雷雨と雹",
   "wmo99": "雷雨と強い雹",
   "wmoUnknown": "不明",
-
   "statsTitle": "詳細",
   "sunriseSunset": "日の出 / 日の入り",
   "uvIndex": "UV指数",
@@ -108,7 +104,6 @@
   "dewPointDesc": "露点温度",
   "pressure": "気圧",
   "visibility": "視程",
-
   "moonPhase": "月の満ち欠け",
   "illuminated": "照射",
   "moonNew": "新月",
@@ -118,5 +113,8 @@
   "moonFull": "満月",
   "moonWaningGibbous": "十六夜月",
   "moonLastQuarter": "下弦の月",
-  "moonWaningCrescent": "有明月"
+  "moonWaningCrescent": "有明月",
+  "tempUnit": "気温",
+  "windUnit": "風速",
+  "weatherAlert": "気象警報"
 }

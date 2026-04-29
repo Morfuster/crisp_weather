@@ -1,8 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../core/models/current_weather.dart';
 import '../../../core/models/daily_forecast.dart';
+import '../../../core/settings/settings_provider.dart';
 import '../../../shared/widgets/forecast_panel.dart';
 import '../../../shared/widgets/weather_icon.dart';
 
@@ -19,6 +21,7 @@ class CurrentWeatherCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final settings = context.watch<SettingsProvider>();
     final timeLabel = DateFormat('EEE, h:mm a').format(weather.time);
 
     return Padding(
@@ -36,7 +39,7 @@ class CurrentWeatherCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '${weather.temperature.round()}°',
+                        settings.tempUnit.format(weather.temperature),
                         style: theme.textTheme.displayLarge,
                       ),
                       Text(
@@ -45,12 +48,12 @@ class CurrentWeatherCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        '↑${today.tempMax.round()}°  ↓${today.tempMin.round()}°',
+                        '↑${settings.tempUnit.format(today.tempMax)}  ↓${settings.tempUnit.format(today.tempMin)}',
                         style: theme.textTheme.bodyMedium,
                       ),
                       const SizedBox(height: 2),
                       Text(
-                        'feelsLike'.tr(args: ['${weather.feelsLike.round()}']),
+                        'feelsLike'.tr(args: ['${settings.tempUnit.convert(weather.feelsLike).round()}°']),
                         style: theme.textTheme.bodySmall,
                       ),
                       const SizedBox(height: 2),
@@ -77,7 +80,7 @@ class CurrentWeatherCard extends StatelessWidget {
                 ),
                 _Stat(
                   icon: Icons.air_rounded,
-                  label: '${weather.windSpeed.round()} ${'kmh'.tr()}',
+                  label: settings.windUnit.format(weather.windSpeed),
                   sublabel: 'wind'.tr(),
                 ),
               ],
