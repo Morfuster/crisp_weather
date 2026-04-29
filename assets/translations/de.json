@@ -107,5 +107,16 @@
   "dewPoint": "Taupunkt",
   "dewPointDesc": "Taupunkttemperatur",
   "pressure": "Luftdruck",
-  "visibility": "Sichtweite"
+  "visibility": "Sichtweite",
+
+  "moonPhase": "Mondphase",
+  "illuminated": "beleuchtet",
+  "moonNew": "Neumond",
+  "moonWaxingCrescent": "Zunehmende Sichel",
+  "moonFirstQuarter": "Erstes Viertel",
+  "moonWaxingGibbous": "Zunehmender Mond",
+  "moonFull": "Vollmond",
+  "moonWaningGibbous": "Abnehmender Mond",
+  "moonLastQuarter": "Letztes Viertel",
+  "moonWaningCrescent": "Abnehmende Sichel"
 }

@@ -107,5 +107,16 @@
   "dewPoint": "Dauwpunt",
   "dewPointDesc": "Dauwpunttemperatuur",
   "pressure": "Luchtdruk",
-  "visibility": "Zicht"
+  "visibility": "Zicht",
+
+  "moonPhase": "Maanfase",
+  "illuminated": "verlicht",
+  "moonNew": "Nieuwe maan",
+  "moonWaxingCrescent": "Wassende sikkel",
+  "moonFirstQuarter": "Eerste kwartier",
+  "moonWaxingGibbous": "Wassende maan",
+  "moonFull": "Volle maan",
+  "moonWaningGibbous": "Afnemende maan",
+  "moonLastQuarter": "Laatste kwartier",
+  "moonWaningCrescent": "Afnemende sikkel"
 }

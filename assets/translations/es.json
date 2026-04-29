@@ -107,5 +107,16 @@
   "dewPoint": "Punto de rocío",
   "dewPointDesc": "Temperatura del punto de rocío",
   "pressure": "Presión",
-  "visibility": "Visibilidad"
+  "visibility": "Visibilidad",
+
+  "moonPhase": "Fase lunar",
+  "illuminated": "iluminado",
+  "moonNew": "Luna nueva",
+  "moonWaxingCrescent": "Creciente",
+  "moonFirstQuarter": "Cuarto creciente",
+  "moonWaxingGibbous": "Gibosa creciente",
+  "moonFull": "Luna llena",
+  "moonWaningGibbous": "Gibosa menguante",
+  "moonLastQuarter": "Cuarto menguante",
+  "moonWaningCrescent": "Menguante"
 }

@@ -107,5 +107,16 @@
   "dewPoint": "Point de rosée",
   "dewPointDesc": "Température du point de rosée",
   "pressure": "Pression",
-  "visibility": "Visibilité"
+  "visibility": "Visibilité",
+
+  "moonPhase": "Phase de la lune",
+  "illuminated": "illuminé",
+  "moonNew": "Nouvelle lune",
+  "moonWaxingCrescent": "Premier croissant",
+  "moonFirstQuarter": "Premier quartier",
+  "moonWaxingGibbous": "Gibbeuse croissante",
+  "moonFull": "Pleine lune",
+  "moonWaningGibbous": "Gibbeuse décroissante",
+  "moonLastQuarter": "Dernier quartier",
+  "moonWaningCrescent": "Dernier croissant"
 }

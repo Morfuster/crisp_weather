@@ -107,5 +107,16 @@
   "dewPoint": "نقطة الندى",
   "dewPointDesc": "درجة حرارة نقطة الندى",
   "pressure": "الضغط الجوي",
-  "visibility": "الرؤية"
+  "visibility": "الرؤية",
+
+  "moonPhase": "طور القمر",
+  "illuminated": "مضاء",
+  "moonNew": "القمر الجديد",
+  "moonWaxingCrescent": "الهلال المتزايد",
+  "moonFirstQuarter": "الربع الأول",
+  "moonWaxingGibbous": "الأحدب المتزايد",
+  "moonFull": "البدر",
+  "moonWaningGibbous": "الأحدب المتناقص",
+  "moonLastQuarter": "الربع الأخير",
+  "moonWaningCrescent": "الهلال المتناقص"
 }

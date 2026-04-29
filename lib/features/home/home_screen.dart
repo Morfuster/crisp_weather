@@ -12,6 +12,7 @@ import '../forecast/widgets/daily_chart.dart';
 import 'home_provider.dart';
 import 'widgets/current_weather_card.dart';
 import 'widgets/hourly_chart.dart';
+import 'widgets/moon_phase_card.dart';
 import 'widgets/sunrise_sunset_card.dart';
 import 'widgets/weather_background.dart';
 import 'widgets/weather_stats_grid.dart';
@@ -185,8 +186,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           message: homeProvider.error!.message,
                           onRetry: () => context.read<HomeProvider>().refresh(),
                         )
-                      : data != null
-                          ? SingleChildScrollView(
+                      : data != null && data.daily.isNotEmpty
+                          ? RefreshIndicator(
+                              onRefresh: () => context.read<HomeProvider>().refresh(),
+                              color: Colors.white,
+                              backgroundColor: Colors.black45,
+                              child: SingleChildScrollView(
+                              physics: const AlwaysScrollableScrollPhysics(),
                               padding: const EdgeInsets.only(bottom: 24),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -219,10 +225,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                   ),
                                   const SizedBox(height: 12),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                                    child: MoonPhaseCard(date: now),
+                                  ),
+                                  const SizedBox(height: 12),
                                   WeatherStatsGrid(weather: data.current),
                                 ],
                               ),
-                            )
+                            ))
                           : const SizedBox.shrink(),
             ),
           ],

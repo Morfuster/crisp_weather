@@ -107,5 +107,16 @@
   "dewPoint": "Ponto de orvalho",
   "dewPointDesc": "Temperatura do ponto de orvalho",
   "pressure": "Pressão",
-  "visibility": "Visibilidade"
+  "visibility": "Visibilidade",
+
+  "moonPhase": "Fase da lua",
+  "illuminated": "iluminado",
+  "moonNew": "Lua nova",
+  "moonWaxingCrescent": "Crescente",
+  "moonFirstQuarter": "Quarto crescente",
+  "moonWaxingGibbous": "Gibosa crescente",
+  "moonFull": "Lua cheia",
+  "moonWaningGibbous": "Gibosa minguante",
+  "moonLastQuarter": "Quarto minguante",
+  "moonWaningCrescent": "Minguante"
 }

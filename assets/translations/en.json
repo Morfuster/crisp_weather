@@ -107,5 +107,16 @@
   "dewPoint": "Dew Point",
   "dewPointDesc": "Dew point temperature",
   "pressure": "Pressure",
-  "visibility": "Visibility"
+  "visibility": "Visibility",
+
+  "moonPhase": "Moon Phase",
+  "illuminated": "illuminated",
+  "moonNew": "New Moon",
+  "moonWaxingCrescent": "Waxing Crescent",
+  "moonFirstQuarter": "First Quarter",
+  "moonWaxingGibbous": "Waxing Gibbous",
+  "moonFull": "Full Moon",
+  "moonWaningGibbous": "Waning Gibbous",
+  "moonLastQuarter": "Last Quarter",
+  "moonWaningCrescent": "Waning Crescent"
 }

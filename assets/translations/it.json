@@ -107,5 +107,16 @@
   "dewPoint": "Punto di rugiada",
   "dewPointDesc": "Temperatura del punto di rugiada",
   "pressure": "Pressione",
-  "visibility": "Visibilità"
+  "visibility": "Visibilità",
+
+  "moonPhase": "Fase lunare",
+  "illuminated": "illuminato",
+  "moonNew": "Luna nuova",
+  "moonWaxingCrescent": "Falce crescente",
+  "moonFirstQuarter": "Primo quarto",
+  "moonWaxingGibbous": "Gibbosa crescente",
+  "moonFull": "Luna piena",
+  "moonWaningGibbous": "Gibbosa calante",
+  "moonLastQuarter": "Ultimo quarto",
+  "moonWaningCrescent": "Falce calante"
 }

@@ -107,5 +107,16 @@
   "dewPoint": "Точка росы",
   "dewPointDesc": "Температура точки росы",
   "pressure": "Давление",
-  "visibility": "Видимость"
+  "visibility": "Видимость",
+
+  "moonPhase": "Фаза луны",
+  "illuminated": "освещено",
+  "moonNew": "Новолуние",
+  "moonWaxingCrescent": "Растущий серп",
+  "moonFirstQuarter": "Первая четверть",
+  "moonWaxingGibbous": "Растущая луна",
+  "moonFull": "Полнолуние",
+  "moonWaningGibbous": "Убывающая луна",
+  "moonLastQuarter": "Последняя четверть",
+  "moonWaningCrescent": "Убывающий серп"
 }

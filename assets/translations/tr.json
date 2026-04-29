@@ -107,5 +107,16 @@
   "dewPoint": "Çiğ Noktası",
   "dewPointDesc": "Çiğ noktası sıcaklığı",
   "pressure": "Basınç",
-  "visibility": "Görüş mesafesi"
+  "visibility": "Görüş mesafesi",
+
+  "moonPhase": "Ay Fazı",
+  "illuminated": "aydınlatılmış",
+  "moonNew": "Yeni Ay",
+  "moonWaxingCrescent": "Hilal",
+  "moonFirstQuarter": "İlk Dördün",
+  "moonWaxingGibbous": "Şişan Ay",
+  "moonFull": "Dolunay",
+  "moonWaningGibbous": "Küçülen Ay",
+  "moonLastQuarter": "Son Dördün",
+  "moonWaningCrescent": "Küçülen Hilal"
 }

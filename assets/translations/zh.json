@@ -107,5 +107,16 @@
   "dewPoint": "露点",
   "dewPointDesc": "露点温度",
   "pressure": "气压",
-  "visibility": "能见度"
+  "visibility": "能见度",
+
+  "moonPhase": "月相",
+  "illuminated": "被照亮",
+  "moonNew": "新月",
+  "moonWaxingCrescent": "峨眉月",
+  "moonFirstQuarter": "上弦月",
+  "moonWaxingGibbous": "盈凸月",
+  "moonFull": "满月",
+  "moonWaningGibbous": "亏凸月",
+  "moonLastQuarter": "下弦月",
+  "moonWaningCrescent": "残月"
 }
