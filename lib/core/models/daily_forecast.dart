@@ -5,6 +5,11 @@ class DailyForecast {
     required this.tempMin,
     required this.weatherCode,
     required this.precipitationSum,
+    required this.precipitationProbabilityMax,
+    required this.sunrise,
+    required this.sunset,
+    required this.uvIndexMax,
+    required this.windDirectionDominant,
   });
 
   final DateTime date;
@@ -12,6 +17,11 @@ class DailyForecast {
   final double tempMin;
   final int weatherCode;
   final double precipitationSum;
+  final int precipitationProbabilityMax;
+  final DateTime sunrise;
+  final DateTime sunset;
+  final double uvIndexMax;
+  final int windDirectionDominant;
 
   @override
   bool operator ==(Object other) =>

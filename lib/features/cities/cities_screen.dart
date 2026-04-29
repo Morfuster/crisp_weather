@@ -132,7 +132,7 @@ class _AttributionFooter extends StatelessWidget {
             TextSpan(
               style: const TextStyle(color: AppColors.textTertiary, fontSize: 11),
               children: [
-                const TextSpan(text: 'Weather data: '),
+                TextSpan(text: '${'weatherData'.tr()} '),
                 TextSpan(
                   text: 'Open-Meteo.com',
                   style: const TextStyle(
@@ -143,7 +143,7 @@ class _AttributionFooter extends StatelessWidget {
                   recognizer: TapGestureRecognizer()
                     ..onTap = () => launchUrl(_url, mode: LaunchMode.externalApplication),
                 ),
-                const TextSpan(text: ' — free & open source'),
+                TextSpan(text: ' — ${'freeOpenSource'.tr()}'),
               ],
             ),
           ),

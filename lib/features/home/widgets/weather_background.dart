@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 import '../../../shared/theme/animated_weather_painter.dart';
+import '../../../shared/theme/panel_opacity.dart' show PanelTheme, scenePanelStyle;
 
 class WeatherBackground extends StatefulWidget {
   const WeatherBackground({
@@ -93,7 +94,7 @@ class _WeatherBackgroundState extends State<WeatherBackground>
             TweenAnimationBuilder<double>(
               tween: Tween(begin: 0.0, end: 1.0),
               duration: const Duration(milliseconds: 1200),
-              key: ValueKey(_scene),
+              key: ValueKey('gradient_$_scene'),
               builder: (ctx, t, child) => Container(
                 decoration: BoxDecoration(
                   gradient: t >= 1.0
@@ -121,8 +122,17 @@ class _WeatherBackgroundState extends State<WeatherBackground>
             // Dark overlay for text readability
             Container(color: Colors.black.withAlpha(70)),
 
-            // Content
-            child!,
+            // Content — wrapped with animated panel style
+            TweenAnimationBuilder<double>(
+              tween: Tween(begin: 0.0, end: 1.0),
+              duration: const Duration(milliseconds: 1200),
+              key: ValueKey('panel_$_scene'),
+              builder: (ctx, t, ch) => PanelTheme(
+                style: scenePanelStyle(_prevScene).lerp(scenePanelStyle(_scene), t),
+                child: ch!,
+              ),
+              child: child,
+            ),
           ],
         );
       },

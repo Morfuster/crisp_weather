@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 import '../../../core/models/daily_forecast.dart';
 import '../../../shared/theme/app_colors.dart';
@@ -75,6 +75,7 @@ class DailyChart extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: List.generate(daily.length, (i) {
                     final d = daily[i];
+                    final todayLabel = 'today'.tr();
                     final maxNorm =
                         (d.tempMax - minTemp) / tempRange;
                     final minNorm =
@@ -102,7 +103,7 @@ class DailyChart extends StatelessWidget {
                             height: _dateRowH,
                             child: Center(
                               child: Text(
-                                _dateLabel(d.date, i),
+                                _dateLabel(d.date, i, todayLabel),
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 10,
@@ -192,12 +193,12 @@ class DailyChart extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.fromLTRB(20, 10, 16, 0),
           child: Row(
-            children: const [
-              _LegendItem(color: Color(0xFFFF6B6B), label: 'Max (°C)'),
-              SizedBox(width: 16),
-              _LegendItem(color: Color(0xFF64B5F6), label: 'Min (°C)'),
-              SizedBox(width: 16),
-              _LegendItem(color: AppColors.accentBlue, label: 'Rain (mm)', isBar: true),
+            children: [
+              _LegendItem(color: const Color(0xFFFF6B6B), label: 'legendMax'.tr()),
+              const SizedBox(width: 16),
+              _LegendItem(color: const Color(0xFF64B5F6), label: 'legendMin'.tr()),
+              const SizedBox(width: 16),
+              _LegendItem(color: AppColors.accentBlue, label: 'legendRain'.tr(), isBar: true),
             ],
           ),
         ),
@@ -205,8 +206,8 @@ class DailyChart extends StatelessWidget {
     );
   }
 
-  String _dateLabel(DateTime date, int index) {
-    if (index == 0) return 'Today\n${DateFormat('M/d').format(date)}';
+  String _dateLabel(DateTime date, int index, String todayLabel) {
+    if (index == 0) return '$todayLabel\n${DateFormat('M/d').format(date)}';
     return '${DateFormat('EEE').format(date)}\n${DateFormat('M/d').format(date)}';
   }
 }

@@ -2,18 +2,25 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/models/current_weather.dart';
-import '../../../data/adapters/open_meteo_adapter.dart';
+import '../../../core/models/daily_forecast.dart';
 import '../../../shared/widgets/forecast_panel.dart';
 import '../../../shared/widgets/weather_icon.dart';
 
 class CurrentWeatherCard extends StatelessWidget {
-  const CurrentWeatherCard({super.key, required this.weather});
+  const CurrentWeatherCard({
+    super.key,
+    required this.weather,
+    required this.today,
+  });
 
   final CurrentWeather weather;
+  final DailyForecast today;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final timeLabel = DateFormat('EEE, h:mm a').format(weather.time);
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: ForecastPanel(
@@ -33,13 +40,25 @@ class CurrentWeatherCard extends StatelessWidget {
                         style: theme.textTheme.displayLarge,
                       ),
                       Text(
-                        wmoLabel(weather.weatherCode),
+                        'wmo${weather.weatherCode}'.tr(),
                         style: theme.textTheme.titleMedium,
                       ),
                       const SizedBox(height: 4),
                       Text(
+                        '↑${today.tempMax.round()}°  ↓${today.tempMin.round()}°',
+                        style: theme.textTheme.bodyMedium,
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
                         'feelsLike'.tr(args: ['${weather.feelsLike.round()}']),
                         style: theme.textTheme.bodySmall,
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        timeLabel,
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: Colors.white54,
+                        ),
                       ),
                     ],
                   ),

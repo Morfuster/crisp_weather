@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 class Activity {
   const Activity({
-    required this.label,
+    required this.labelKey,
     required this.icon,
-    required this.reason,
+    required this.reasonKey,
   });
 
-  final String label;
+  final String labelKey;
   final IconData icon;
-  final String reason;
+  final String reasonKey;
 }
 
 List<Activity> suggestActivities(int wmoCode, double temperature) {
@@ -28,19 +28,19 @@ List<Activity> suggestActivities(int wmoCode, double temperature) {
   if (isStormy) {
     return const [
       Activity(
-        label: 'Stay indoors',
+        labelKey: 'stayIndoors',
         icon: Icons.home_rounded,
-        reason: 'Thunderstorm active — stay safe inside.',
+        reasonKey: 'stayIndoorsReason',
       ),
       Activity(
-        label: 'Read a book',
+        labelKey: 'readBook',
         icon: Icons.menu_book_rounded,
-        reason: 'Perfect weather to curl up with a good book.',
+        reasonKey: 'readBookReason',
       ),
       Activity(
-        label: 'Watch a movie',
+        labelKey: 'watchMovie',
         icon: Icons.movie_rounded,
-        reason: 'Great excuse to catch up on your watch list.',
+        reasonKey: 'watchMovieReason',
       ),
     ];
   }
@@ -48,19 +48,19 @@ List<Activity> suggestActivities(int wmoCode, double temperature) {
   if (isRainy) {
     return const [
       Activity(
-        label: 'Visit a museum',
+        labelKey: 'visitMuseum',
         icon: Icons.museum_rounded,
-        reason: 'Stay dry and explore something cultural.',
+        reasonKey: 'visitMuseumReason',
       ),
       Activity(
-        label: 'Cook at home',
+        labelKey: 'cookAtHome',
         icon: Icons.soup_kitchen_rounded,
-        reason: 'Rainy days are perfect for comfort food.',
+        reasonKey: 'cookAtHomeReason',
       ),
       Activity(
-        label: 'Indoor workout',
+        labelKey: 'indoorWorkout',
         icon: Icons.fitness_center_rounded,
-        reason: 'Keep moving without the rain.',
+        reasonKey: 'indoorWorkoutReason',
       ),
     ];
   }
@@ -68,19 +68,19 @@ List<Activity> suggestActivities(int wmoCode, double temperature) {
   if (isSnowy) {
     return const [
       Activity(
-        label: 'Skiing',
+        labelKey: 'skiing',
         icon: Icons.downhill_skiing_rounded,
-        reason: 'Fresh snow — great conditions for the slopes.',
+        reasonKey: 'skiingReason',
       ),
       Activity(
-        label: 'Build a snowman',
+        labelKey: 'buildSnowman',
         icon: Icons.ac_unit_rounded,
-        reason: 'Classic winter fun.',
+        reasonKey: 'buildSnowmanReason',
       ),
       Activity(
-        label: 'Hot chocolate',
+        labelKey: 'hotChocolate',
         icon: Icons.local_cafe_rounded,
-        reason: 'Warm up with a cozy drink.',
+        reasonKey: 'hotChocolateReason',
       ),
     ];
   }
@@ -88,19 +88,19 @@ List<Activity> suggestActivities(int wmoCode, double temperature) {
   if (isClear && isHot) {
     return const [
       Activity(
-        label: 'Swimming',
+        labelKey: 'swimming',
         icon: Icons.pool_rounded,
-        reason: 'Hot clear day — perfect for a swim.',
+        reasonKey: 'swimmingReason',
       ),
       Activity(
-        label: 'Picnic',
+        labelKey: 'picnic',
         icon: Icons.outdoor_grill_rounded,
-        reason: 'Great weather for outdoor dining.',
+        reasonKey: 'picnicReason',
       ),
       Activity(
-        label: 'Stay hydrated',
+        labelKey: 'stayHydrated',
         icon: Icons.water_drop_rounded,
-        reason: 'Heat above 28°C — drink plenty of water.',
+        reasonKey: 'stayHydratedReason',
       ),
     ];
   }
@@ -108,24 +108,24 @@ List<Activity> suggestActivities(int wmoCode, double temperature) {
   if (isClear && isWarm) {
     return const [
       Activity(
-        label: 'Running',
+        labelKey: 'running',
         icon: Icons.directions_run_rounded,
-        reason: 'Clear skies and good temperature for a run.',
+        reasonKey: 'runningReason',
       ),
       Activity(
-        label: 'Cycling',
+        labelKey: 'cycling',
         icon: Icons.directions_bike_rounded,
-        reason: 'Ideal conditions for a bike ride.',
+        reasonKey: 'cyclingReason',
       ),
       Activity(
-        label: 'Picnic',
+        labelKey: 'picnic',
         icon: Icons.outdoor_grill_rounded,
-        reason: 'Sunny day great for outdoor dining.',
+        reasonKey: 'picnicSunnyReason',
       ),
       Activity(
-        label: 'Photography',
+        labelKey: 'photography',
         icon: Icons.camera_alt_rounded,
-        reason: 'Beautiful light for photos.',
+        reasonKey: 'photographyReason',
       ),
     ];
   }
@@ -133,14 +133,14 @@ List<Activity> suggestActivities(int wmoCode, double temperature) {
   if (isCold) {
     return const [
       Activity(
-        label: 'Cozy café',
+        labelKey: 'cozyCafe',
         icon: Icons.local_cafe_rounded,
-        reason: 'Cold outside — warm up with a hot drink.',
+        reasonKey: 'cozyCafeReason',
       ),
       Activity(
-        label: 'Indoor workout',
+        labelKey: 'indoorWorkout',
         icon: Icons.fitness_center_rounded,
-        reason: 'Stay warm and active inside.',
+        reasonKey: 'indoorWorkoutColdReason',
       ),
     ];
   }
@@ -148,28 +148,28 @@ List<Activity> suggestActivities(int wmoCode, double temperature) {
   if (isPartlyCloudy && isWarm) {
     return const [
       Activity(
-        label: 'Walking',
+        labelKey: 'walking',
         icon: Icons.directions_walk_rounded,
-        reason: 'Comfortable temperature for a stroll.',
+        reasonKey: 'walkingReason',
       ),
       Activity(
-        label: 'Cycling',
+        labelKey: 'cycling',
         icon: Icons.directions_bike_rounded,
-        reason: 'Cloudy skies keep it cool for a ride.',
+        reasonKey: 'cyclingCloudyReason',
       ),
     ];
   }
 
   return const [
     Activity(
-      label: 'Walking',
+      labelKey: 'walking',
       icon: Icons.directions_walk_rounded,
-      reason: 'A good day to get some fresh air.',
+      reasonKey: 'walkingDefaultReason',
     ),
     Activity(
-      label: 'Read a book',
+      labelKey: 'readBook',
       icon: Icons.menu_book_rounded,
-      reason: 'Relaxed conditions for indoor downtime.',
+      reasonKey: 'readBookDefaultReason',
     ),
   ];
 }

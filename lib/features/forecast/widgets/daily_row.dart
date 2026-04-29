@@ -1,8 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 import '../../../core/models/daily_forecast.dart';
-import '../../../data/adapters/open_meteo_adapter.dart';
 import '../../../shared/widgets/weather_icon.dart';
 
 class DailyRow extends StatelessWidget {
@@ -26,7 +25,7 @@ class DailyRow extends StatelessWidget {
           const SizedBox(width: 8),
           Expanded(
             child: Text(
-              wmoLabel(forecast.weatherCode),
+              'wmo${forecast.weatherCode}'.tr(),
               style: theme.textTheme.bodySmall,
               overflow: TextOverflow.ellipsis,
             ),

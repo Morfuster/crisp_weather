@@ -13,7 +13,7 @@ class HourlyScroll extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 110,
+      height: 130,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -47,6 +47,16 @@ class _HourlyItem extends StatelessWidget {
             '${entry.temperature.round()}°',
             style: theme.textTheme.bodyLarge,
           ),
+          if (entry.precipitationProbability > 0)
+            Text(
+              '${entry.precipitationProbability}%',
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: const Color(0xFF64B5F6),
+                fontSize: 10,
+              ),
+            )
+          else
+            const SizedBox(height: 14),
         ],
       ),
     );

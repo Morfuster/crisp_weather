@@ -14,11 +14,36 @@ class WeatherService {
     final uri = Uri.https(_baseUrl, '/v1/forecast', {
       'latitude': city.latitude.toString(),
       'longitude': city.longitude.toString(),
-      'current':
-          'temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,wind_speed_10m',
-      'hourly': 'temperature_2m,weather_code',
-      'daily':
-          'temperature_2m_max,temperature_2m_min,weather_code,precipitation_sum',
+      'current': [
+        'temperature_2m',
+        'apparent_temperature',
+        'relative_humidity_2m',
+        'weather_code',
+        'wind_speed_10m',
+        'wind_direction_10m',
+        'uv_index',
+        'dew_point_2m',
+        'surface_pressure',
+        'visibility',
+      ].join(','),
+      'hourly': [
+        'temperature_2m',
+        'weather_code',
+        'precipitation',
+        'snowfall',
+        'precipitation_probability',
+      ].join(','),
+      'daily': [
+        'temperature_2m_max',
+        'temperature_2m_min',
+        'weather_code',
+        'precipitation_sum',
+        'precipitation_probability_max',
+        'sunrise',
+        'sunset',
+        'uv_index_max',
+        'wind_direction_10m_dominant',
+      ].join(','),
       'timezone': 'auto',
       'forecast_days': '7',
     });

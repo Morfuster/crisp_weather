@@ -129,7 +129,25 @@ class HourlyChart extends StatelessWidget {
                             ),
                           ),
                         ),
-                        // Precip label just above the bar top
+                        // Rain probability label (top of bottom zone)
+                        if (h.precipitationProbability > 0)
+                          Positioned(
+                            bottom: _bottomRowHeight - 14,
+                            left: 0,
+                            right: 0,
+                            height: 12,
+                            child: Center(
+                              child: Text(
+                                '${h.precipitationProbability}%',
+                                style: const TextStyle(
+                                  color: AppColors.accentBlue,
+                                  fontSize: 9,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                          ),
+                        // Precip amount label just above the bar top
                         if (total > 0)
                           Positioned(
                             bottom: (total / maxPrecip * _precipBarMaxHeight)

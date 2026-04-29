@@ -4,39 +4,6 @@ import '../../core/models/daily_forecast.dart';
 import '../../core/models/hourly_forecast.dart';
 import '../../core/models/weather_data.dart';
 
-const Map<int, String> wmoLabels = {
-  0: 'Clear sky',
-  1: 'Mainly clear',
-  2: 'Partly cloudy',
-  3: 'Overcast',
-  45: 'Foggy',
-  48: 'Rime fog',
-  51: 'Light drizzle',
-  53: 'Drizzle',
-  55: 'Heavy drizzle',
-  56: 'Light freezing drizzle',
-  57: 'Heavy freezing drizzle',
-  61: 'Slight rain',
-  63: 'Moderate rain',
-  65: 'Heavy rain',
-  66: 'Light freezing rain',
-  67: 'Heavy freezing rain',
-  71: 'Slight snow',
-  73: 'Moderate snow',
-  75: 'Heavy snow',
-  77: 'Snow grains',
-  80: 'Slight showers',
-  81: 'Moderate showers',
-  82: 'Violent showers',
-  85: 'Slight snow showers',
-  86: 'Heavy snow showers',
-  95: 'Thunderstorm',
-  96: 'Thunderstorm with hail',
-  99: 'Thunderstorm with heavy hail',
-};
-
-String wmoLabel(int code) => wmoLabels[code] ?? 'Unknown';
-
 WeatherData parseWeatherData(Map<String, dynamic> json, City city) {
   final currentJson = json['current'] as Map<String, dynamic>;
   final current = CurrentWeather.fromJson(currentJson);
@@ -45,6 +12,9 @@ WeatherData parseWeatherData(Map<String, dynamic> json, City city) {
   final times = hourlyJson['time'] as List<dynamic>;
   final temps = hourlyJson['temperature_2m'] as List<dynamic>;
   final codes = hourlyJson['weather_code'] as List<dynamic>;
+  final precips = hourlyJson['precipitation'] as List<dynamic>;
+  final snowfalls = hourlyJson['snowfall'] as List<dynamic>;
+  final precipProbs = hourlyJson['precipitation_probability'] as List<dynamic>;
 
   final now = DateTime.now();
   final hourly = <HourlyForecast>[];
@@ -55,6 +25,9 @@ WeatherData parseWeatherData(Map<String, dynamic> json, City city) {
         time: t,
         temperature: (temps[i] as num).toDouble(),
         weatherCode: (codes[i] as num).toInt(),
+        precipitation: (precips[i] as num? ?? 0).toDouble(),
+        snowfall: (snowfalls[i] as num? ?? 0).toDouble(),
+        precipitationProbability: (precipProbs[i] as num? ?? 0).toInt(),
       ));
     }
   }
@@ -65,6 +38,11 @@ WeatherData parseWeatherData(Map<String, dynamic> json, City city) {
   final dMin = dailyJson['temperature_2m_min'] as List<dynamic>;
   final dCodes = dailyJson['weather_code'] as List<dynamic>;
   final dPrecip = dailyJson['precipitation_sum'] as List<dynamic>;
+  final dPrecipProb = dailyJson['precipitation_probability_max'] as List<dynamic>;
+  final dSunrise = dailyJson['sunrise'] as List<dynamic>;
+  final dSunset = dailyJson['sunset'] as List<dynamic>;
+  final dUvMax = dailyJson['uv_index_max'] as List<dynamic>;
+  final dWindDir = dailyJson['wind_direction_10m_dominant'] as List<dynamic>;
 
   final daily = List<DailyForecast>.generate(
     dTimes.length,
@@ -74,6 +52,11 @@ WeatherData parseWeatherData(Map<String, dynamic> json, City city) {
       tempMin: (dMin[i] as num).toDouble(),
       weatherCode: (dCodes[i] as num).toInt(),
       precipitationSum: (dPrecip[i] as num? ?? 0).toDouble(),
+      precipitationProbabilityMax: (dPrecipProb[i] as num? ?? 0).toInt(),
+      sunrise: DateTime.parse(dSunrise[i] as String),
+      sunset: DateTime.parse(dSunset[i] as String),
+      uvIndexMax: (dUvMax[i] as num? ?? 0).toDouble(),
+      windDirectionDominant: (dWindDir[i] as num? ?? 0).toInt(),
     ),
   );
 
