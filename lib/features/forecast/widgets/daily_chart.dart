@@ -3,6 +3,7 @@ import 'dart:ui' as ui;
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/models/daily_forecast.dart';
@@ -127,11 +128,14 @@ class DailyChart extends StatelessWidget {
                         children: List.generate(daily.length, (i) {
                           return GestureDetector(
                             behavior: HitTestBehavior.opaque,
-                            onTap: () => showDailyDetail(
-                              context,
-                              day: daily[i],
-                              allHourly: allHourly,
-                            ),
+                            onTap: () {
+                              HapticFeedback.mediumImpact();
+                              showDailyDetail(
+                                context,
+                                day: daily[i],
+                                allHourly: allHourly,
+                              );
+                            },
                             child: SizedBox(
                               width: _colWidth,
                               height: totalH,

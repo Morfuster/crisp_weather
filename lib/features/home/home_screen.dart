@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 
@@ -278,7 +279,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         )
                       : data != null && data.daily.isNotEmpty
                           ? RefreshIndicator(
-                              onRefresh: () => context.read<HomeProvider>().refresh(),
+                              onRefresh: () async {
+                                HapticFeedback.mediumImpact();
+                                await context.read<HomeProvider>().refresh();
+                              },
                               color: Colors.white,
                               backgroundColor: Colors.black45,
                               child: SingleChildScrollView(
