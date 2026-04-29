@@ -193,8 +193,9 @@ class _HourlyChartState extends State<HourlyChart> {
                                 ),
                               if (total > 0)
                                 Positioned(
-                                  bottom: (total / maxPrecip * _precipBarMaxHeight)
-                                      .clamp(2.0, _precipBarMaxHeight),
+                                  bottom: _bottomRowHeight +
+                                      (total / maxPrecip * _precipBarMaxHeight)
+                                          .clamp(2.0, _precipBarMaxHeight),
                                   left: 0,
                                   right: 0,
                                   height: 14,
