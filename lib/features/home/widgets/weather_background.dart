@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../../shared/theme/animated_weather_painter.dart';
 import '../../../shared/theme/panel_opacity.dart' show PanelTheme, scenePanelStyle;
+import '../../../shared/theme/weather_background_image.dart';
 
 class WeatherBackground extends StatefulWidget {
   const WeatherBackground({
@@ -112,6 +113,21 @@ class _WeatherBackgroundState extends State<WeatherBackground>
                             )!,
                           ),
                         ),
+                ),
+              ),
+            ),
+
+            // Background image layer (crossfades on scene change)
+            TweenAnimationBuilder<double>(
+              tween: Tween(begin: 0.0, end: 1.0),
+              duration: const Duration(milliseconds: 1200),
+              key: ValueKey('img_$_scene'),
+              builder: (ctx, t, _) => Opacity(
+                opacity: t * 0.55,
+                child: Image.asset(
+                  weatherBackgroundAsset(_scene),
+                  fit: BoxFit.cover,
+                  errorBuilder: (ctx, err, stack) => const SizedBox.shrink(),
                 ),
               ),
             ),

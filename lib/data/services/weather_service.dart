@@ -9,6 +9,8 @@ import '../adapters/open_meteo_adapter.dart';
 
 class WeatherService {
   static const _baseUrl = 'api.open-meteo.com';
+  static const _maxAttempts = 3;
+  static const _retryDelays = [Duration(seconds: 2), Duration(seconds: 5)];
 
   Future<WeatherData> fetchWeather(City city) async {
     final uri = Uri.https(_baseUrl, '/v1/forecast', {
@@ -49,22 +51,38 @@ class WeatherService {
       'forecast_days': '7',
     });
 
-    http.Response response;
-    try {
-      response = await http.get(uri);
-    } catch (_) {
-      response = await http.get(uri);
+    Object? lastError;
+
+    for (var attempt = 0; attempt < _maxAttempts; attempt++) {
+      if (attempt > 0) {
+        await Future.delayed(_retryDelays[attempt - 1]);
+      }
+
+      try {
+        final response = await http.get(uri);
+
+        if (response.statusCode != 200) {
+          throw WeatherException(
+            message: 'Failed to fetch weather for ${city.name}',
+            statusCode: response.statusCode,
+            responseBody: response.body,
+          );
+        }
+
+        final json = jsonDecode(response.body) as Map<String, dynamic>;
+        return parseWeatherData(json, city);
+      } on WeatherException {
+        // HTTP errors are not retryable — surface immediately
+        rethrow;
+      } catch (e) {
+        lastError = e;
+      }
     }
 
-    if (response.statusCode != 200) {
-      throw WeatherException(
-        message: 'Failed to fetch weather for ${city.name}',
-        statusCode: response.statusCode,
-        responseBody: response.body,
-      );
-    }
-
-    final json = jsonDecode(response.body) as Map<String, dynamic>;
-    return parseWeatherData(json, city);
+    throw WeatherException(
+      message: 'Network error fetching weather for ${city.name}: $lastError',
+      statusCode: 0,
+      responseBody: '',
+    );
   }
 }

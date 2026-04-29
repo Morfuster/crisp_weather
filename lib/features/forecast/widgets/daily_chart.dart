@@ -6,15 +6,18 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/models/daily_forecast.dart';
+import '../../../core/models/hourly_forecast.dart';
 import '../../../core/settings/settings_provider.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/widgets/forecast_panel.dart';
 import '../../../shared/widgets/weather_icon.dart';
+import 'daily_detail_sheet.dart';
 
 class DailyChart extends StatelessWidget {
-  const DailyChart({super.key, required this.daily});
+  const DailyChart({super.key, required this.daily, required this.allHourly});
 
   final List<DailyForecast> daily;
+  final List<HourlyForecast> allHourly;
 
   static const _colWidth = 72.0;
   static const _dateRowH = 36.0;
@@ -115,6 +118,23 @@ class DailyChart extends StatelessWidget {
                                   ),
                                 ),
                               ],
+                            ),
+                          );
+                        }),
+                      ),
+                      // Tap overlay — one transparent tile per column
+                      Row(
+                        children: List.generate(daily.length, (i) {
+                          return GestureDetector(
+                            behavior: HitTestBehavior.opaque,
+                            onTap: () => showDailyDetail(
+                              context,
+                              day: daily[i],
+                              allHourly: allHourly,
+                            ),
+                            child: SizedBox(
+                              width: _colWidth,
+                              height: totalH,
                             ),
                           );
                         }),

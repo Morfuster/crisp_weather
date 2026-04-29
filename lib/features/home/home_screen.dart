@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/settings/settings_provider.dart';
@@ -217,6 +218,30 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(16, 8, 16, 0),
+                  child: Divider(color: Colors.white12, height: 1),
+                ),
+                FutureBuilder<PackageInfo>(
+                  future: PackageInfo.fromPlatform(),
+                  builder: (c, snap) {
+                    final version = snap.hasData
+                        ? 'v${snap.data!.version}+${snap.data!.buildNumber}'
+                        : '';
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      child: Center(
+                        child: Text(
+                          'CrispWeather $version',
+                          style: const TextStyle(
+                            color: Colors.white38,
+                            fontSize: 11,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
               ],
             ),
           ),
@@ -275,7 +300,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     HourlyChart(hourly: data.hourly),
                                   const SizedBox(height: 24),
                                   _SectionHeader(title: 'forecast7day'.tr()),
-                                  DailyChart(daily: data.daily),
+                                  DailyChart(daily: data.daily, allHourly: data.hourly),
                                   const SizedBox(height: 24),
                                   _SectionHeader(title: 'activitiesToday'.tr()),
                                   _ActivitiesWrap(
