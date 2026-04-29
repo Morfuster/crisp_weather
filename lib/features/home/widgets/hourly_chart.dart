@@ -21,9 +21,9 @@ class HourlyChart extends StatefulWidget {
 class _HourlyChartState extends State<HourlyChart> {
   static const _columnWidth = 56.0;
   static const _chartHeight = 80.0;
-  static const _precipBarMaxHeight = 36.0;
+  static const _precipBarMaxHeight = 28.0;
   static const _topRowHeight = 56.0;
-  static const _bottomRowHeight = 40.0;
+  static const _bottomRowHeight = 52.0;
 
   late final ScrollController _scroll;
 
@@ -174,6 +174,7 @@ class _HourlyChartState extends State<HourlyChart> {
                                   ),
                                 ),
                               ),
+                              // % — top of bottom zone
                               if (h.precipitationProbability > 0)
                                 Positioned(
                                   bottom: _bottomRowHeight - 14,
@@ -191,14 +192,13 @@ class _HourlyChartState extends State<HourlyChart> {
                                     ),
                                   ),
                                 ),
+                              // mm — just below the %
                               if (total > 0)
                                 Positioned(
-                                  bottom: _bottomRowHeight +
-                                      (total / maxPrecip * _precipBarMaxHeight)
-                                          .clamp(2.0, _precipBarMaxHeight),
+                                  bottom: _bottomRowHeight - 26,
                                   left: 0,
                                   right: 0,
-                                  height: 14,
+                                  height: 12,
                                   child: Center(
                                     child: Text(
                                       isSnow
@@ -207,9 +207,9 @@ class _HourlyChartState extends State<HourlyChart> {
                                       style: TextStyle(
                                         color: isSnow
                                             ? Colors.white70
-                                            : AppColors.accentBlue,
+                                            : AppColors.accentBlue.withAlpha(180),
                                         fontSize: 9,
-                                        fontWeight: FontWeight.w600,
+                                        fontWeight: FontWeight.w500,
                                       ),
                                     ),
                                   ),
