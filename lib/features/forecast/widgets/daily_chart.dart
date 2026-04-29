@@ -162,28 +162,10 @@ class DailyChart extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                // Wind row — top of bar zone
-                                Positioned(
-                                  top: _dateRowH + _iconRowH + _curveH + 4,
-                                  left: 0,
-                                  right: 0,
-                                  height: 14,
-                                  child: Center(
-                                    child: Text(
-                                      windLabel,
-                                      style: const TextStyle(
-                                        color: Colors.white54,
-                                        fontSize: 9,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
-                                ),
-                                // Precip mm label — just above the bar
+                                // Precip mm label — top of bar zone
                                 if (precip > 0)
                                   Positioned(
-                                    top: _dateRowH + _iconRowH + _curveH + 20,
+                                    top: _dateRowH + _iconRowH + _curveH + 4,
                                     left: 0,
                                     right: 0,
                                     height: 14,
@@ -200,6 +182,24 @@ class DailyChart extends StatelessWidget {
                                       ),
                                     ),
                                   ),
+                                // Wind row — below precip
+                                Positioned(
+                                  top: _dateRowH + _iconRowH + _curveH + 20,
+                                  left: 0,
+                                  right: 0,
+                                  height: 14,
+                                  child: Center(
+                                    child: Text(
+                                      windLabel,
+                                      style: const TextStyle(
+                                        color: Colors.white54,
+                                        fontSize: 9,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
                           );
