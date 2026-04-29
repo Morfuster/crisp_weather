@@ -43,6 +43,7 @@ WeatherData parseWeatherData(Map<String, dynamic> json, City city) {
   final dSunset = dailyJson['sunset'] as List<dynamic>;
   final dUvMax = dailyJson['uv_index_max'] as List<dynamic>;
   final dWindDir = dailyJson['wind_direction_10m_dominant'] as List<dynamic>;
+  final dWindSpeed = dailyJson['wind_speed_10m_max'] as List<dynamic>;
 
   final daily = List<DailyForecast>.generate(
     dTimes.length,
@@ -57,6 +58,7 @@ WeatherData parseWeatherData(Map<String, dynamic> json, City city) {
       sunset: DateTime.parse(dSunset[i] as String),
       uvIndexMax: (dUvMax[i] as num? ?? 0).toDouble(),
       windDirectionDominant: (dWindDir[i] as num? ?? 0).toInt(),
+      windSpeedMax: (dWindSpeed[i] as num? ?? 0).toDouble(),
     ),
   );
 

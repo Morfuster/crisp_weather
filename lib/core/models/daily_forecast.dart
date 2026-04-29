@@ -10,6 +10,7 @@ class DailyForecast {
     required this.sunset,
     required this.uvIndexMax,
     required this.windDirectionDominant,
+    required this.windSpeedMax,
   });
 
   final DateTime date;
@@ -22,6 +23,7 @@ class DailyForecast {
   final DateTime sunset;
   final double uvIndexMax;
   final int windDirectionDominant;
+  final double windSpeedMax;
 
   @override
   bool operator ==(Object other) =>

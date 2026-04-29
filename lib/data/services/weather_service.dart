@@ -43,6 +43,7 @@ class WeatherService {
         'sunset',
         'uv_index_max',
         'wind_direction_10m_dominant',
+        'wind_speed_10m_max',
       ].join(','),
       'timezone': 'auto',
       'forecast_days': '7',
