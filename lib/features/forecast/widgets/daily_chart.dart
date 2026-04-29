@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'dart:ui' as ui;
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ class DailyChart extends StatelessWidget {
   static const _dateRowH = 36.0;
   static const _iconRowH = 38.0;
   static const _curveH = 120.0;
-  static const _barZoneH = 72.0; // enlarged: wind row + precip bar + label
+  static const _barZoneH = 72.0;
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +56,7 @@ class DailyChart extends StatelessWidget {
                   height: totalH,
                   child: Stack(
                     children: [
-                      // Curves + bars painted behind
+                      // Curves + bars + temp labels all in painter (exact coords)
                       Positioned(
                         top: _dateRowH + _iconRowH,
                         left: 0,
@@ -70,32 +71,17 @@ class DailyChart extends StatelessWidget {
                             colWidth: _colWidth,
                             curveH: _curveH,
                             barZoneH: _barZoneH,
+                            tempUnit: settings.tempUnit,
+                            windUnit: settings.windUnit,
                           ),
                         ),
                       ),
-                      // Per-column overlay
+                      // Per-column overlay: date, icon, precip mm, wind
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: List.generate(daily.length, (i) {
                           final d = daily[i];
                           final todayLabel = 'today'.tr();
-                          final maxNorm = (d.tempMax - minTemp) / tempRange;
-                          final minNorm = (d.tempMin - minTemp) / tempRange;
-
-                          // dot Y within the full column (absolute from top)
-                          final maxDotY = _dateRowH + _iconRowH +
-                              _curveH * (1 - maxNorm) * 0.8 +
-                              _curveH * 0.1;
-                          final minDotY = _dateRowH + _iconRowH +
-                              _curveH * (1 - minNorm) * 0.8 +
-                              _curveH * 0.1;
-
-                          final precip = d.precipitationSum;
-
-                          // wind: direction bearing label + speed
-                          final windBearing = _bearingLabel(d.windDirectionDominant);
-                          final windLabel = '${settings.windUnit.format(d.windSpeedMax)} $windBearing';
-
                           return SizedBox(
                             width: _colWidth,
                             height: totalH,
@@ -126,78 +112,6 @@ class DailyChart extends StatelessWidget {
                                   height: _iconRowH - 4,
                                   child: Center(
                                     child: WeatherIcon(code: d.weatherCode, size: 34),
-                                  ),
-                                ),
-                                // Max temp label — below the dot
-                                Positioned(
-                                  top: maxDotY + 6,
-                                  left: 0,
-                                  right: 0,
-                                  height: 14,
-                                  child: Center(
-                                    child: Text(
-                                      settings.tempUnit.format(d.tempMax),
-                                      style: const TextStyle(
-                                        color: Color(0xFFFF6B6B),
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                // Min temp label — below the dot
-                                Positioned(
-                                  top: minDotY + 6,
-                                  left: 0,
-                                  right: 0,
-                                  height: 14,
-                                  child: Center(
-                                    child: Text(
-                                      settings.tempUnit.format(d.tempMin),
-                                      style: const TextStyle(
-                                        color: Color(0xFF64B5F6),
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                // Precip mm label — top of bar zone
-                                if (precip > 0)
-                                  Positioned(
-                                    top: _dateRowH + _iconRowH + _curveH + 4,
-                                    left: 0,
-                                    right: 0,
-                                    height: 14,
-                                    child: Center(
-                                      child: Text(
-                                        precip >= 10
-                                            ? '${precip.round()}mm'
-                                            : '${precip.toStringAsFixed(1)}mm',
-                                        style: const TextStyle(
-                                          color: AppColors.accentBlue,
-                                          fontSize: 9,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                // Wind row — below precip
-                                Positioned(
-                                  top: _dateRowH + _iconRowH + _curveH + 20,
-                                  left: 0,
-                                  right: 0,
-                                  height: 14,
-                                  child: Center(
-                                    child: Text(
-                                      windLabel,
-                                      style: const TextStyle(
-                                        color: Colors.white54,
-                                        fontSize: 9,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
                                   ),
                                 ),
                               ],
@@ -242,11 +156,6 @@ class DailyChart extends StatelessWidget {
         ),
       ],
     );
-  }
-
-  String _bearingLabel(int deg) {
-    const labels = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
-    return labels[((deg + 22) % 360) ~/ 45];
   }
 
   String _dateLabel(DateTime date, int index, String todayLabel) {
@@ -304,6 +213,8 @@ class _DailyChartPainter extends CustomPainter {
     required this.colWidth,
     required this.curveH,
     required this.barZoneH,
+    required this.tempUnit,
+    required this.windUnit,
   });
 
   final List<DailyForecast> daily;
@@ -313,6 +224,8 @@ class _DailyChartPainter extends CustomPainter {
   final double colWidth;
   final double curveH;
   final double barZoneH;
+  final TempUnit tempUnit;
+  final WindUnit windUnit;
 
   double _normTemp(double temp) =>
       ((temp - minTemp) / tempRange).clamp(0.0, 1.0);
@@ -338,7 +251,10 @@ class _DailyChartPainter extends CustomPainter {
       points: List.generate(daily.length, _minOffset),
       color: const Color(0xFF64B5F6),
     );
+    _drawTempLabels(canvas);
     _drawPrecipBars(canvas);
+    _drawPrecipLabels(canvas);
+    _drawWindLabels(canvas);
   }
 
   void _drawCurve(Canvas canvas, {required List<Offset> points, required Color color}) {
@@ -375,12 +291,56 @@ class _DailyChartPainter extends CustomPainter {
     }
   }
 
-  void _drawPrecipBars(Canvas canvas) {
-    // bars sit in the bottom part of barZone, below wind row (20px) and mm label (14px)
-    const windRowH = 18.0;
-    const mmLabelH = 14.0;
-    final barMaxH = barZoneH - windRowH - mmLabelH - 6;
+  void _drawTempLabels(Canvas canvas) {
+    for (var i = 0; i < daily.length; i++) {
+      final d = daily[i];
+      final cx = colWidth * i + colWidth / 2;
 
+      // Max label — below max dot
+      _drawLabel(
+        canvas,
+        text: tempUnit.format(d.tempMax),
+        center: Offset(cx, _dotY(d.tempMax) + 14),
+        color: const Color(0xFFFF6B6B),
+      );
+
+      // Min label — below min dot
+      _drawLabel(
+        canvas,
+        text: tempUnit.format(d.tempMin),
+        center: Offset(cx, _dotY(d.tempMin) + 14),
+        color: const Color(0xFF64B5F6),
+      );
+    }
+  }
+
+  void _drawLabel(Canvas canvas, {required String text, required Offset center, required Color color}) {
+    final pb = ui.ParagraphBuilder(ui.ParagraphStyle(
+      textAlign: TextAlign.center,
+      fontSize: 10,
+      fontWeight: FontWeight.w700,
+    ))
+      ..pushStyle(ui.TextStyle(color: color))
+      ..addText(text);
+
+    final paragraph = pb.build()
+      ..layout(ui.ParagraphConstraints(width: colWidth));
+
+    canvas.drawParagraph(
+      paragraph,
+      Offset(center.dx - colWidth / 2, center.dy - paragraph.height / 2),
+    );
+  }
+
+  // Layout within barZone (y=curveH is top of barZone):
+  //   curveH + 0           → bar top area (barMaxH tall)
+  //   curveH + barMaxH + 2 → mm label (12px)
+  //   curveH + barMaxH + 16→ wind label (12px)
+  static const _barMaxH = 38.0;
+  static const _mmLabelY = _barMaxH + 4.0;   // below bar
+  static const _windLabelY = _barMaxH + 18.0; // below mm
+
+  void _drawPrecipBars(Canvas canvas) {
     final barPaint = Paint()
       ..color = AppColors.accentBlue.withAlpha(160)
       ..style = PaintingStyle.fill;
@@ -389,11 +349,11 @@ class _DailyChartPainter extends CustomPainter {
       final precip = daily[i].precipitationSum;
       if (precip <= 0) continue;
 
-      final barH = (precip / maxPrecip * barMaxH).clamp(4.0, barMaxH);
+      final barH = (precip / maxPrecip * _barMaxH).clamp(4.0, _barMaxH);
       final x = colWidth * i + colWidth * 0.3;
       final barW = colWidth * 0.4;
-      // bottom of barZone is y = curveH + barZoneH; bar sits just above bottom
-      final top = curveH + barZoneH - barH;
+      // bar bottom is at curveH + barMaxH, grows upward
+      final top = curveH + _barMaxH - barH;
 
       canvas.drawRRect(
         RRect.fromRectAndRadius(
@@ -405,7 +365,40 @@ class _DailyChartPainter extends CustomPainter {
     }
   }
 
+  void _drawPrecipLabels(Canvas canvas) {
+    for (var i = 0; i < daily.length; i++) {
+      final precip = daily[i].precipitationSum;
+      if (precip <= 0) continue;
+      final text = precip >= 10 ? '${precip.round()}mm' : '${precip.toStringAsFixed(1)}mm';
+      _drawLabel(
+        canvas,
+        text: text,
+        center: Offset(colWidth * i + colWidth / 2, curveH + _mmLabelY + 6),
+        color: AppColors.accentBlue,
+      );
+    }
+  }
+
+  void _drawWindLabels(Canvas canvas) {
+    const bearings = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+    for (var i = 0; i < daily.length; i++) {
+      final d = daily[i];
+      final bearing = bearings[((d.windDirectionDominant + 22) % 360) ~/ 45];
+      final text = '${windUnit.format(d.windSpeedMax)} $bearing';
+      _drawLabel(
+        canvas,
+        text: text,
+        center: Offset(colWidth * i + colWidth / 2, curveH + _windLabelY + 6),
+        color: Colors.white54,
+      );
+    }
+  }
+
   @override
   bool shouldRepaint(_DailyChartPainter old) =>
-      old.daily != daily || old.minTemp != minTemp || old.tempRange != tempRange;
+      old.daily != daily ||
+      old.minTemp != minTemp ||
+      old.tempRange != tempRange ||
+      old.tempUnit != tempUnit ||
+      old.windUnit != windUnit;
 }
